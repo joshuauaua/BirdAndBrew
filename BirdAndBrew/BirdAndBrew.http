@@ -1,0 +1,6 @@
+@BirdAndBrew_HostAddress = http://localhost:5240
+
+GET {{BirdAndBrew_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
