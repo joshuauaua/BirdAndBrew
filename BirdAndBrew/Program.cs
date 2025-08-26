@@ -1,7 +1,9 @@
 using BirdAndBrew.Data;
 using BirdAndBrew.Repositories;
 using BirdAndBrew.Repositories.CustomerRepositories;
+using BirdAndBrew.Repositories.TableRepositories;
 using BirdAndBrew.Services.CustomerServices;
+using BirdAndBrew.Services.TableServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace BirdAndBrew;
@@ -21,7 +23,11 @@ public class Program
         
         builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
         builder.Services.AddScoped<ICustomerService, CustomerService>();
-
+        
+        builder.Services.AddScoped<ITableRepository, TableRepository>();
+        builder.Services.AddScoped<ITableService, TableService>();
+        
+        
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();

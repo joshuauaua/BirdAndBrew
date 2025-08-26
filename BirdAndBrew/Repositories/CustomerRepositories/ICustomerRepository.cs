@@ -6,7 +6,6 @@ namespace BirdAndBrew.Repositories.CustomerRepositories;
 public interface ICustomerRepository
 {
     
-    
     //Get All Customers
     Task<List<Customer>> GetAllCustomersAsync();
 

@@ -7,7 +7,6 @@ public class CustomerService : ICustomerService
 {
     
     //DI from repository
-    
     private readonly ICustomerRepository _customerRepository;
 
     public CustomerService(ICustomerRepository customerRepository)
@@ -21,11 +20,11 @@ public class CustomerService : ICustomerService
     {
         var customers = await _customerRepository.GetAllCustomersAsync();
         
-        var customersDTO = customers.Select(u => new CustomerDTO
+        var customersDTO = customers.Select(c => new CustomerDTO
             {
-                Id =u.Id,
-                Name = u.Name,
-                PhoneNumber = u.PhoneNumber
+                Id =c.Id,
+                Name = c.Name,
+                PhoneNumber = c.PhoneNumber
             }
         ).ToList();
 
@@ -101,8 +100,6 @@ public class CustomerService : ICustomerService
         _customerRepository.UpdateCustomerAsync(existing);
 
         return true;
-
-
     }
 
 

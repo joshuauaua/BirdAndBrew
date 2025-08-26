@@ -8,7 +8,6 @@ namespace BirdAndBrew.Repositories;
 public class CustomerRepository : ICustomerRepository
 {
     
-    
     //First off, DI (reference) the AbbDBContext
     private readonly AppDBContext _context;
 
@@ -16,8 +15,7 @@ public class CustomerRepository : ICustomerRepository
     {
         _context = context;
     }
-
-
+    
     public async Task<List<Customer>> GetAllCustomersAsync()
     {
 

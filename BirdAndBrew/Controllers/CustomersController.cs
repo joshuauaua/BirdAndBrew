@@ -12,12 +12,10 @@ public class CustomersController : ControllerBase
 {
 
     private readonly ICustomerService _customerService;
-    private readonly IConfiguration _config;
 
-    public CustomersController(ICustomerService customerService, IConfiguration config)
+    public CustomersController(ICustomerService customerService)
     {
         _customerService = customerService;
-        _config = config;
     }
 
 
