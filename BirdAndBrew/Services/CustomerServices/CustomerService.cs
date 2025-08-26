@@ -84,8 +84,27 @@ public class CustomerService : ICustomerService
     }
     
     
-    
-    
+    //Update Customer Field Async 
+    public async Task<bool> UpdateCustomerFieldAsync(CustomerDTO customerDTO)
+    {
+        var existing = await _customerRepository.GetCustomerByIdAsync(customerDTO.Id);
+        
+        if (existing == null)
+            return false;
+
+        if (customerDTO.Name != null)
+            existing.Name = customerDTO.Name;
+        
+        if (customerDTO.PhoneNumber != null)
+            existing.PhoneNumber = customerDTO.PhoneNumber;
+
+        _customerRepository.UpdateCustomerAsync(existing);
+
+        return true;
+
+
+    }
+
 
     //Delete Customer
     public async Task<bool> DeleteCustomerAsync(int customerId)

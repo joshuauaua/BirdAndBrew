@@ -48,6 +48,7 @@ public class CustomerRepository : ICustomerRepository
         await _context.SaveChangesAsync();
         return true;
     }
+    
 
     public async Task<bool> DeleteCustomerAsync(int customerId)
     {

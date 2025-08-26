@@ -76,9 +76,24 @@ public class CustomersController : ControllerBase
         {
             return NotFound();
         }
-            
-
+        
         return Ok(customer.Id);
     }
+
+    [HttpPatch]
+
+    public async Task<ActionResult<CustomerDTO>> UpdateCustomerField(CustomerDTO customer)
+    {
+        var updated = await _customerService.UpdateCustomerFieldAsync(customer);
+        
+        if (!updated)
+        {
+            return NotFound();
+        }
+        
+        return Ok(customer.Id);
+
+    }
+    
 
 }
