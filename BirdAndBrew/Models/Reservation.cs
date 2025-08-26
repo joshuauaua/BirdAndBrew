@@ -15,9 +15,6 @@ public class Reservation
     [Required]
     public DateTime ReservationDateTime { get; set; }
     
-    //Can be used by Admin to see when a Reservation was made
-    public DateTime CreatedAt { get; set; }
-    
     //FK Customer
     [ForeignKey("Customer")]
     public int FK_CustomerId { get; set; }

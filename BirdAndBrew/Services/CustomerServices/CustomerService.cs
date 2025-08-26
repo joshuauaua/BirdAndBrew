@@ -1,6 +1,6 @@
 using BirdAndBrew.DTOs.CustomerDTOs;
+using BirdAndBrew.Models;
 using BirdAndBrew.Repositories.CustomerRepositories;
-
 namespace BirdAndBrew.Services.CustomerServices;
 
 public class CustomerService : ICustomerService
@@ -19,30 +19,88 @@ public class CustomerService : ICustomerService
     //Get All Customers
     public async Task<List<CustomerDTO>> GetAllCustomersAsync()
     {
-        throw new NotImplementedException();
+        var customers = await _customerRepository.GetAllCustomersAsync();
+        
+        var customersDTO = customers.Select(u => new CustomerDTO
+            {
+                Id =u.Id,
+                Name = u.Name,
+                PhoneNumber = u.PhoneNumber
+            }
+        ).ToList();
+
+        return customersDTO;
     }
 
     //Get All Customers by ID
-    public Task<CustomerDTO> GetCustomerByIdAsync(int customerId)
+    public async Task<CustomerDTO> GetCustomerByIdAsync(int customerId)
     {
-        throw new NotImplementedException();
+        var customer = await _customerRepository.GetCustomerByIdAsync(customerId);
+
+        if (customer == null)
+        {
+            return null;
+        }
+        
+        var customerDTO = new CustomerDTO
+        {
+            Id = customer.Id,
+            Name = customer.Name,
+            PhoneNumber = customer.PhoneNumber
+        };
+
+        return customerDTO;
     }
 
     //Add Customer Async
-    public Task<int> AddCustomerAsync(CustomerDTO customerDTO)
+    public async Task<int> AddCustomerAsync(CustomerDTO customerDTO)
     {
-        throw new NotImplementedException();
+        var customer = new Customer
+        {
+            Name = customerDTO.Name,
+            PhoneNumber = customerDTO.PhoneNumber
+        };
+
+        var newCustomerId = await _customerRepository.AddCustomerAsync(customer);
+        
+        return newCustomerId;
+        
     }
 
-    //Update Customer Async
-    public Task<bool> UpdateCustomerAsync(CustomerDTO customerDTO)
+    //Update Customer Async All Fields
+    public async Task<bool> UpdateCustomerAsync(CustomerDTO customerDTO)
     {
-        throw new NotImplementedException();
+        var existing = await _customerRepository.GetCustomerByIdAsync(customerDTO.Id);
+        
+        if (existing == null)
+            return false;
+
+        existing.Name = customerDTO.Name;
+        existing.PhoneNumber = customerDTO.PhoneNumber;
+
+        await _customerRepository.UpdateCustomerAsync(existing);
+
+        return true;
     }
+    
+    
+    
+    
 
     //Delete Customer
-    public Task<bool> DeleteCustomerAsync(int customerId)
+    public async Task<bool> DeleteCustomerAsync(int customerId)
     {
-        throw new NotImplementedException();
+
+        var customer = await _customerRepository.GetCustomerByIdAsync(customerId);
+
+        if (customerId == null)
+        {
+            return false;
+        }
+        
+        await _customerRepository.DeleteCustomerAsync(customerId);
+
+        return true;
+
     }
 }

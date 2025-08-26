@@ -20,7 +20,7 @@ public interface ICustomerRepository
     Task<bool> UpdateCustomerAsync(Customer customer);
 
     //Delete Customer
-    Task<bool> DeleteUserAsync(int customerId);
+    Task<bool> DeleteCustomerAsync(int customerId);
     
 
 }

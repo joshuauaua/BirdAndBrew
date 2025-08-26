@@ -166,3 +166,4 @@
 /Users/joshuang/Desktop/Programming/BirdAndBrew/BirdAndBrew/obj/Debug/net8.0/BirdAndBrew.pdb
 /Users/joshuang/Desktop/Programming/BirdAndBrew/BirdAndBrew/obj/Debug/net8.0/BirdAndBrew.genruntimeconfig.cache
 /Users/joshuang/Desktop/Programming/BirdAndBrew/BirdAndBrew/obj/Debug/net8.0/ref/BirdAndBrew.dll
+/Users/joshuang/Desktop/Programming/BirdAndBrew/BirdAndBrew/obj/Debug/net8.0/BirdAndBrew.sourcelink.json

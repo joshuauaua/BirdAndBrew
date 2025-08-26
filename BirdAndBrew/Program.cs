@@ -1,4 +1,7 @@
 using BirdAndBrew.Data;
+using BirdAndBrew.Repositories;
+using BirdAndBrew.Repositories.CustomerRepositories;
+using BirdAndBrew.Services.CustomerServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace BirdAndBrew;
@@ -15,6 +18,9 @@ public class Program
         {
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
         });
+        
+        builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+        builder.Services.AddScoped<ICustomerService, CustomerService>();
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
