@@ -23,6 +23,7 @@ public class CustomerRepository : ICustomerRepository
 
         return customers;
     }
+    
 
     public async Task<Customer> GetCustomerByIdAsync(int customerId)
     {
@@ -33,7 +34,7 @@ public class CustomerRepository : ICustomerRepository
 
     public async Task<int> AddCustomerAsync(Customer customer)
     {
-        _context.Customers.Add(customer);
+        await _context.Customers.AddAsync(customer);
         await _context.SaveChangesAsync();
 
         return customer.Id;

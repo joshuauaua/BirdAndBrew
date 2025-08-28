@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BirdAndBrew.Controllers;
 
-[Route("api/customer")]
+[Route("api/customers")]
 [ApiController]
 
 

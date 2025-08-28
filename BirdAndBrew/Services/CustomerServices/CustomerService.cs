@@ -106,9 +106,7 @@ public class CustomerService : ICustomerService
     //Delete Customer
     public async Task<bool> DeleteCustomerAsync(int customerId)
     {
-
-        var customer = await _customerRepository.GetCustomerByIdAsync(customerId);
-
+        
         if (customerId == null)
         {
             return false;
