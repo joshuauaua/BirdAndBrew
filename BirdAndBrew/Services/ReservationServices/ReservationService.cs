@@ -4,16 +4,19 @@ using BirdAndBrew.DTOs.TableDTOs;
 using BirdAndBrew.Models;
 using BirdAndBrew.Repositories.ReservationRepositories;
 using BirdAndBrew.Repositories.TableRepositories;
+using BirdAndBrew.Services.BookingAvailabilityServices;
 
 namespace BirdAndBrew.Services.ReservationServices;
 
 public class ReservationService : IReservationService
 {
     private readonly IReservationRepository _context;
+    private readonly IBookingAvailabilityService _booker;
 
-    public ReservationService(IReservationRepository context)
+    public ReservationService(IReservationRepository context, IBookingAvailabilityService booker)
     {
         _context = context;
+        _booker = booker;
     }
 
     
@@ -68,7 +71,7 @@ public class ReservationService : IReservationService
     
     
 
-    public async Task<int> CreateNewReservationAsync(ReservationDTO reservationDTO)
+    public async Task<bool> CreateNewReservationAsync(ReservationDTO reservationDTO)
     {
         var reservation = new Reservation
         {
@@ -78,11 +81,19 @@ public class ReservationService : IReservationService
             FK_CustomerId = reservationDTO.FK_CustomerId,
             Fk_TableId = reservationDTO.Fk_TableId
         };
-        
-        
-        var newReservationId = await _context.CreateNewReservationAsync(reservation);
 
-        return newReservationId;
+        var availableTables = await _booker.GetAvailableTablesAsync(reservation.ReservationStartTime, reservation.NumberOfGuests);
+
+        if (availableTables.Count <= 0)
+        {
+            return false;
+        }
+        
+        else
+        {
+            var newReservationId = await _context.CreateNewReservationAsync(reservation);
+            return true;
+        }
     }
 
     public async Task<bool> UpdateReservationAsync(ReservationDTO reservationDTO)

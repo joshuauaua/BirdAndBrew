@@ -12,7 +12,7 @@ public interface IReservationService
     Task<ReservationDTO> GetReservationByIdAsync(int reservationId);
     
     //Create New Reservation
-    Task<int> CreateNewReservationAsync(ReservationDTO reservationDTO);
+    Task<bool> CreateNewReservationAsync(ReservationDTO reservationDTO);
 
     //Update Reservation
     Task<bool> UpdateReservationAsync(ReservationDTO reservationDTO);
