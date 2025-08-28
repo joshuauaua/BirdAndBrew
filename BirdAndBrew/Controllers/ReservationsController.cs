@@ -1,4 +1,5 @@
 using BirdAndBrew.DTOs.ReservationDTOs;
+using BirdAndBrew.Services.BookingAvailabilityServices;
 using BirdAndBrew.Services.ReservationServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,12 +11,20 @@ namespace BirdAndBrew.Controllers;
 public class ReservationsController : ControllerBase
 {
     private readonly IReservationService _context;
+    private readonly IBookingAvailabilityService _bookingAvailability;
 
-    public ReservationsController(IReservationService context)
+
+    public ReservationsController(IReservationService context, IBookingAvailabilityService bookingAvailability)
     {
         _context = context;
+        _bookingAvailability = bookingAvailability;
+
     }
     
+    
+
+    
+
     
     [HttpGet]
     public async Task<ActionResult<List<ReservationDTO>>> GetAllReservations()
@@ -25,6 +34,7 @@ public class ReservationsController : ControllerBase
         return Ok(reservations);
     }
     
+
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ReservationDTO>> GetReservationById(int id)
     {
@@ -38,6 +48,21 @@ public class ReservationsController : ControllerBase
         return Ok(reservation);
     }
 
+    
+    //Available Tables
+    [HttpGet("available-tables")]
+    public async Task<IActionResult> GetAvailableTables(DateTime startTime, int partySize)
+    {
+        var tables = await _bookingAvailability.GetAvailableTablesAsync(startTime, partySize);
+
+        if (!tables.Any())
+            return NotFound("No available tables.");
+
+        return Ok(tables);
+    }
+
+    
+    
     [HttpPost]
     public async Task<ActionResult<ReservationDTO>> CreateReservation(ReservationDTO reservationDTO)
     {

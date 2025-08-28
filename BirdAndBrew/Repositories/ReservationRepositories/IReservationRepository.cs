@@ -11,6 +11,9 @@ public interface IReservationRepository
     //Get Reservation By ID
     Task<Reservation> GetReservationByIdAsync(int reservationId);
 
+   //Get Available Tables
+   Task<List<Reservation>> GetOverlappingReservationsAsync(DateTime startTime, DateTime endTime);
+    
     //Create New Reservation
     Task<int> CreateNewReservationAsync(Reservation reservation);
 

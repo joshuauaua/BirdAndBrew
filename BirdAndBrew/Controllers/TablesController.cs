@@ -1,4 +1,6 @@
+using BirdAndBrew.DTOs.ReservationDTOs;
 using BirdAndBrew.DTOs.TableDTOs;
+using BirdAndBrew.Models;
 using BirdAndBrew.Services.TableServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,10 +25,6 @@ public class TablesController : ControllerBase
     public async Task<ActionResult<List<TableDTO>>> GetAllTables()
     {
         
-        if (_tableService == null)
-            throw new Exception("_tableService was not injected!");
-        
-        
         var tables = await _tableService.GetAllTablesAsync();
 
         return Ok(tables);
@@ -47,7 +45,8 @@ public class TablesController : ControllerBase
 
         return Ok(table);
     }
-
+    
+    
     [HttpPost]
     public async Task<ActionResult<TableDTO>> AddTable(TableDTO tableDTO)
     {

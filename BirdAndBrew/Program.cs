@@ -3,10 +3,12 @@ using BirdAndBrew.Repositories;
 using BirdAndBrew.Repositories.CustomerRepositories;
 using BirdAndBrew.Repositories.ReservationRepositories;
 using BirdAndBrew.Repositories.TableRepositories;
+using BirdAndBrew.Services.BookingAvailabilityServices;
 using BirdAndBrew.Services.CustomerServices;
 using BirdAndBrew.Services.ReservationServices;
 using BirdAndBrew.Services.TableServices;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace BirdAndBrew;
 
@@ -32,11 +34,16 @@ public class Program
         builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
         builder.Services.AddScoped<IReservationService, ReservationService>();
         
+        builder.Services.AddScoped<IBookingAvailabilityService, BookingAvailabilityService>();
+
+        
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        
+        
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.

@@ -13,8 +13,11 @@ public class Reservation
     public int NumberOfGuests { get; set; }
     
     [Required]
-    public DateTime ReservationDateTime { get; set; }
+    public DateTime ReservationStartTime { get; set; }
     
+    [Required]
+    public DateTime ReservationEndTime { get; set; }
+
     //FK Customer
     [ForeignKey("Customer")]
     public int FK_CustomerId { get; set; }

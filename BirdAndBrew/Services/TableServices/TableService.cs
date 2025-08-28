@@ -1,5 +1,7 @@
+using BirdAndBrew.DTOs.ReservationDTOs;
 using BirdAndBrew.DTOs.TableDTOs;
 using BirdAndBrew.Models;
+using BirdAndBrew.Repositories.ReservationRepositories;
 using BirdAndBrew.Repositories.TableRepositories;
 
 
@@ -8,9 +10,8 @@ namespace BirdAndBrew.Services.TableServices;
 public class TableService : ITableService
 {
 
-    //DI, why interface tho?
-    private readonly ITableRepository _tableRepository;
-
+     private readonly ITableRepository _tableRepository;
+     
     public TableService(ITableRepository tableRepository)
     {
         _tableRepository = tableRepository;
@@ -49,10 +50,7 @@ public class TableService : ITableService
         return tableDTO;
     }
 
-    
 
-    
-    
     public async Task<int> AddTableAsync(TableDTO tableDTO)
     {
         
@@ -77,7 +75,6 @@ public class TableService : ITableService
         {
             return false;
         }
-
         updatedTable.TableNumber = tableDTO.TableNumber;
         updatedTable.Capacity = tableDTO.Capacity;
         
@@ -94,7 +91,6 @@ public class TableService : ITableService
         {
             return false;
         }
-
         if (tableDTO.TableNumber != null)
             existing.TableNumber = tableDTO.TableNumber;
         

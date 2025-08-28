@@ -8,16 +8,17 @@ public interface ITableRepository
     //Get All Tables
     Task<List<Table>> GetAllTablesAsync();
 
-    //Get Customer By Id
+    //Get Table By Id
     Task<Table> GetTableByIdAsync(int tableId);
     
-    //Add Customer
+    
+    //Add Table
     Task<int> AddTableAsync(Table table);
 
-    //Update Customer
+    //Update Table
     Task<bool> UpdateTableAsync(Table table);
 
-    //Delete Customer
+    //Delete Table
     Task<bool> DeleteTableAsync(int tableId);
 
 }

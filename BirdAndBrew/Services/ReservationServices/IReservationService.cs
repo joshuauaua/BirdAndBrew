@@ -10,7 +10,7 @@ public interface IReservationService
     
     //Get Reservation By ID
     Task<ReservationDTO> GetReservationByIdAsync(int reservationId);
-
+    
     //Create New Reservation
     Task<int> CreateNewReservationAsync(ReservationDTO reservationDTO);
 

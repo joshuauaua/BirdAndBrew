@@ -31,6 +31,17 @@ public class ReservationRepository : IReservationRepository
         return reservation; 
     }
 
+    public async Task<List<Reservation>> GetOverlappingReservationsAsync(DateTime startTime, DateTime endTime)
+    {
+        return await _context.Reservations
+            .Include(r => r.Table)
+            .Where(r =>
+                startTime < r.ReservationEndTime &&
+                endTime > r.ReservationStartTime)
+            .ToListAsync();
+    }
+
+
     public async Task<int> CreateNewReservationAsync(Reservation reservation)
     { 
         await _context.Reservations.AddAsync(reservation);
