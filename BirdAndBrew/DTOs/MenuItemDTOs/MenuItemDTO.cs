@@ -1,6 +1,6 @@
 namespace BirdAndBrew.DTOs.MenuItemDTOs;
 
-public class GetMenuItem
+public class MenuItemDTO
 {
     public int Id { get; set; }
     public string Name { get; set; }
