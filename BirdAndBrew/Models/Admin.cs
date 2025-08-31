@@ -6,13 +6,12 @@ public class Admin
 {
     [Key]
     public int Id { get; set; }
+
+    [Required] [MaxLength(50)] public string UserName { get; set; } = string.Empty;
+
+    [Required] [MinLength(8)] public string Password { get; set; } = string.Empty;
     
     [Required]
-    [MaxLength(50)]
-    public string UserName { get; set; }
-    
-    [Required]
-    [MinLength(8)]
-    public string Password { get; set; }
-    
+    public string Role { get; set; }
+
 }

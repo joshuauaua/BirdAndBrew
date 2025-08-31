@@ -167,3 +167,4 @@
 /Users/joshuang/Desktop/Programming/BirdAndBrew/BirdAndBrew/obj/Debug/net8.0/BirdAndBrew.genruntimeconfig.cache
 /Users/joshuang/Desktop/Programming/BirdAndBrew/BirdAndBrew/obj/Debug/net8.0/ref/BirdAndBrew.dll
 /Users/joshuang/Desktop/Programming/BirdAndBrew/BirdAndBrew/obj/Debug/net8.0/BirdAndBrew.sourcelink.json
+/Users/joshuang/Desktop/Programming/BirdAndBrew/BirdAndBrew/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll

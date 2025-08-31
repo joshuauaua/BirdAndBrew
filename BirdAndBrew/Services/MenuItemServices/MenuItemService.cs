@@ -100,6 +100,8 @@ public class MenuItemService : IMenuItemService
     public async Task<bool> DeleteMenuItemAsync(int menuItemId)
     {
 
+        await _context.GetMenuItemByIdAsync(menuItemId);
+        
         if (menuItemId == null)
         {
             return false;
