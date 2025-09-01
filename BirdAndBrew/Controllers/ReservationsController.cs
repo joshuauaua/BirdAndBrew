@@ -1,6 +1,7 @@
 using BirdAndBrew.DTOs.ReservationDTOs;
 using BirdAndBrew.Services.BookingAvailabilityServices;
 using BirdAndBrew.Services.ReservationServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BirdAndBrew.Controllers;
@@ -25,7 +26,7 @@ public class ReservationsController : ControllerBase
 
     
 
-    
+    [Authorize (Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<List<ReservationDTO>>> GetAllReservations()
     {
@@ -34,7 +35,7 @@ public class ReservationsController : ControllerBase
         return Ok(reservations);
     }
     
-
+    [Authorize (Roles = "Admin")]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ReservationDTO>> GetReservationById(int id)
     {
@@ -48,7 +49,7 @@ public class ReservationsController : ControllerBase
         return Ok(reservation);
     }
 
-    
+    [Authorize (Roles = "Admin")]
     //Available Tables
     [HttpGet("available-tables")]
     public async Task<IActionResult> GetAvailableTables(DateTime startTime, int partySize)
@@ -62,7 +63,7 @@ public class ReservationsController : ControllerBase
     }
 
     
-    
+    [Authorize (Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<ReservationDTO>> CreateReservation(ReservationDTO reservationDTO)
     {
@@ -72,6 +73,7 @@ public class ReservationsController : ControllerBase
         return CreatedAtAction(nameof(GetAllReservations), new { id = reservationId });
     }
 
+    [Authorize (Roles = "Admin")]
     [HttpPut]
     public async Task<ActionResult<ReservationDTO>> UpdateReservation(ReservationDTO reservationDTO)
     {
@@ -85,6 +87,7 @@ public class ReservationsController : ControllerBase
         return Ok(reservationDTO.Id);
     }
 
+    [Authorize (Roles = "Admin")]
     [HttpPatch]
     public async Task<ActionResult<ReservationDTO>> UpdateReservationField(ReservationDTO reservationDTO)
     {
@@ -99,6 +102,8 @@ public class ReservationsController : ControllerBase
 
     }
     
+    
+    [Authorize (Roles = "Admin")]
     [HttpDelete]
 
     public async Task<ActionResult<ReservationDTO>> DeleteReservation(ReservationDTO reservationDTO)

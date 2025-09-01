@@ -2,6 +2,7 @@ using BirdAndBrew.DTOs.ReservationDTOs;
 using BirdAndBrew.DTOs.TableDTOs;
 using BirdAndBrew.Models;
 using BirdAndBrew.Services.TableServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BirdAndBrew.Controllers;
@@ -20,6 +21,7 @@ public class TablesController : ControllerBase
     }
 
     
+    [Authorize (Roles = "Admin")]
     //Get All
     [HttpGet]
     public async Task<ActionResult<List<TableDTO>>> GetAllTables()
@@ -30,7 +32,8 @@ public class TablesController : ControllerBase
         return Ok(tables);
 
     }
-
+    
+    [Authorize (Roles = "Admin")]
     [HttpGet("{id:int}")]
     
     public async Task<ActionResult<TableDTO>> GetTableById(int id)
@@ -46,7 +49,7 @@ public class TablesController : ControllerBase
         return Ok(table);
     }
     
-    
+    [Authorize (Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<TableDTO>> AddTable(TableDTO tableDTO)
     {
@@ -55,6 +58,7 @@ public class TablesController : ControllerBase
         return CreatedAtAction(nameof(GetAllTables), new { Id = tableId });
     }
 
+    [Authorize (Roles = "Admin")]
     [HttpPut]
     public async Task<ActionResult<TableDTO>> UpdateTable(TableDTO tableDTO)
     {
@@ -68,7 +72,7 @@ public class TablesController : ControllerBase
         return Ok(tableDTO.Id);
     }
 
-
+    [Authorize (Roles = "Admin")]
     [HttpPatch]
     public async Task<ActionResult<TableDTO>> UpdateTableField(TableDTO tableDTO)
     {
@@ -84,7 +88,7 @@ public class TablesController : ControllerBase
     }
 
 
-
+    [Authorize (Roles = "Admin")]
     [HttpDelete]
 
     public async Task<ActionResult<TableDTO>> DeleteTable(TableDTO tableDTO)
