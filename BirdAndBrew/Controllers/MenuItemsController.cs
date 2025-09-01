@@ -1,5 +1,6 @@
 using BirdAndBrew.DTOs.MenuItemDTOs;
 using BirdAndBrew.Services.MenuItemServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BirdAndBrew.Controllers;
@@ -17,7 +18,7 @@ public class MenuItemsController : ControllerBase
         _context = context;
     }
     
-    
+    [Authorize (Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<int>> CreateNewMenuItem(MenuItemDTO menuItemDTO)
     {
@@ -52,7 +53,7 @@ public class MenuItemsController : ControllerBase
         return Ok(menuItemDTO);
     }
 
-
+    [Authorize (Roles = "Admin")]
     [HttpPut]
     public async Task<ActionResult<MenuItemDTO>> UpdateMenuItem(MenuItemDTO menuItemDTO)
     {
@@ -68,7 +69,7 @@ public class MenuItemsController : ControllerBase
         
     }
 
-
+    [Authorize (Roles = "Admin")]
     [HttpDelete]
     public async Task<ActionResult<MenuItemDTO>> DeleteMenuItem(MenuItemDTO menuItemDTO)
     {

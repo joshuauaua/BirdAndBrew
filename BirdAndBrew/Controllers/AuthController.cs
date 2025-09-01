@@ -27,32 +27,17 @@ public class AuthController(IAuthService authService) : ControllerBase
 
 
     [HttpPost("login")]
-    public async Task <ActionResult<string>> Login(AdminDTO request)
+    public async Task <ActionResult<TokenResponseDTO>> Login(AdminDTO request)
     {
-        var token = await authService.LoginAsync(request);
+        var result = await authService.LoginAsync(request);
 
-        if (token is null)
+        if (result is null)
         {
             return BadRequest("Invalid username or password.");
         }
         
-        return Ok(token);
+        return Ok(result);
 
-    }
-
-
-    [Authorize]
-    [HttpGet]
-    public IActionResult AuthenticatedOnlyEndpoint()
-    {
-        return Ok("You are authenticated!");
-    }
-
-    [Authorize(Roles = "Admin")]
-    [HttpGet("admin-only")]
-    public IActionResult AdminOnlyEndpoint()
-    {
-        return Ok("You are an admin!");
     }
     
 }

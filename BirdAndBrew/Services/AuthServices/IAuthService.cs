@@ -8,7 +8,7 @@ public interface IAuthService
 
     Task<Admin> RegisterAsync(AdminDTO request);
     
-    Task<string> LoginAsync(AdminDTO request);
+    Task<TokenResponseDTO> LoginAsync(AdminDTO request);
 
     
 }

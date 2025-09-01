@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using BirdAndBrew.Data;
 using BirdAndBrew.DTOs.AdminDTOs;
@@ -38,14 +39,40 @@ public class AuthService : IAuthService
 
         admin.UserName = request.UserName;
         admin.Password = hashedPassword;
+        admin.Role = "Admin";
+
 
         _context.Admins.Add(admin);
+        
         await _context.SaveChangesAsync();
         
         return admin;
     }
 
-    public async Task<string> LoginAsync(AdminDTO request)
+
+    private string GenerateRefreshToken()
+    {
+        var randomNumber = new byte[32];
+
+        using var rng = RandomNumberGenerator.Create();
+        
+        rng.GetBytes(randomNumber);
+        return Convert.ToBase64String(randomNumber);
+    }
+
+    private async Task<string> GenerateAndSaveRefreshTokensAsync(Admin admin)
+    {
+        var refreshToken = GenerateRefreshToken();
+        admin.RefreshToken = refreshToken;
+        admin.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+        await _context.SaveChangesAsync();
+
+        return refreshToken;
+    }
+    
+    
+
+    public async Task<TokenResponseDTO> LoginAsync(AdminDTO request)
     {
 
         var admin = await _context.Admins.FirstOrDefaultAsync(a => a.UserName == request.UserName);
@@ -62,7 +89,12 @@ public class AuthService : IAuthService
         }
 
 
-        return CreateToken(admin);
+        var response = new TokenResponseDTO
+        {
+            AccessToken = CreateToken(admin),
+            RefreshToken = await GenerateAndSaveRefreshTokensAsync(admin)
+        };
+        return response;
 
     }
     
