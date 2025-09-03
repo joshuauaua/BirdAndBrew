@@ -51,7 +51,6 @@ public class MenuItemService : IMenuItemService
         }
 
         return menuItemDTO;
-
     }
 
     public async Task<MenuItemDTO> GetMenuItemByIdAsync(int menuItemDTOId)

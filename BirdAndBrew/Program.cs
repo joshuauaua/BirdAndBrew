@@ -2,11 +2,13 @@ using System.Text;
 using BirdAndBrew.Data;
 using BirdAndBrew.Repositories;
 using BirdAndBrew.Repositories.CustomerRepositories;
+using BirdAndBrew.Repositories.MenuItemRepositories;
 using BirdAndBrew.Repositories.ReservationRepositories;
 using BirdAndBrew.Repositories.TableRepositories;
 using BirdAndBrew.Services.AdminServices;
 using BirdAndBrew.Services.BookingAvailabilityServices;
 using BirdAndBrew.Services.CustomerServices;
+using BirdAndBrew.Services.MenuItemServices;
 using BirdAndBrew.Services.ReservationServices;
 using BirdAndBrew.Services.TableServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -60,6 +62,11 @@ public class Program
         
         builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
         builder.Services.AddScoped<IReservationService, ReservationService>();
+
+
+        builder.Services.AddScoped<IMenuItemRepository, MenuItemRepository>();
+        builder.Services.AddScoped<IMenuItemService, MenuItemService>();
+        
         
         builder.Services.AddScoped<IBookingAvailabilityService, BookingAvailabilityService>();
 
