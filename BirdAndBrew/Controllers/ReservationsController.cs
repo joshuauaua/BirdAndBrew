@@ -26,7 +26,7 @@ public class ReservationsController : ControllerBase
 
     
 
-    [Authorize (Roles = "Admin")]
+    //[Authorize (Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<List<ReservationDTO>>> GetAllReservations()
     {
@@ -35,7 +35,7 @@ public class ReservationsController : ControllerBase
         return Ok(reservations);
     }
     
-    [Authorize (Roles = "Admin")]
+    //[Authorize (Roles = "Admin")]
     
     
     [HttpGet("{id:int}")]
@@ -51,7 +51,7 @@ public class ReservationsController : ControllerBase
         return Ok(reservation);
     }
 
-    [Authorize (Roles = "Admin")]
+    //[Authorize (Roles = "Admin")]
     //Available Tables
     [HttpGet("available-tables")]
     public async Task<IActionResult> GetAvailableTables(DateTime startTime, int partySize)
@@ -65,7 +65,7 @@ public class ReservationsController : ControllerBase
     }
 
     
-    [Authorize (Roles = "Admin")]
+   //[Authorize (Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<ReservationDTO>> CreateReservation(ReservationDTO reservationDTO)
     {
@@ -75,7 +75,7 @@ public class ReservationsController : ControllerBase
         return CreatedAtAction(nameof(GetAllReservations), new { id = reservationId });
     }
 
-    [Authorize (Roles = "Admin")]
+    //[Authorize (Roles = "Admin")]
     [HttpPut]
     public async Task<ActionResult<ReservationDTO>> UpdateReservation(ReservationDTO reservationDTO)
     {
@@ -89,7 +89,7 @@ public class ReservationsController : ControllerBase
         return Ok(reservationDTO.Id);
     }
 
-    [Authorize (Roles = "Admin")]
+    //[Authorize (Roles = "Admin")]
     [HttpPatch]
     public async Task<ActionResult<ReservationDTO>> UpdateReservationField(ReservationDTO reservationDTO)
     {
@@ -105,7 +105,7 @@ public class ReservationsController : ControllerBase
     }
     
     
-    [Authorize (Roles = "Admin")]
+    //[Authorize (Roles = "Admin")]
     [HttpDelete]
 
     public async Task<ActionResult<ReservationDTO>> DeleteReservation(int id)

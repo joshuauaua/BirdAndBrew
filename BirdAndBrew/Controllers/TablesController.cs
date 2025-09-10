@@ -21,7 +21,7 @@ public class TablesController : ControllerBase
     }
 
     
-    [Authorize (Roles = "Admin")]
+    //[Authorize (Roles = "Admin")]
     //Get All
     [HttpGet]
     public async Task<ActionResult<List<TableDTO>>> GetAllTables()
@@ -33,7 +33,7 @@ public class TablesController : ControllerBase
 
     }
     
-    [Authorize (Roles = "Admin")]
+    //[Authorize (Roles = "Admin")]
     [HttpGet("{id:int}")]
     
     public async Task<ActionResult<TableDTO>> GetTableById(int id)
@@ -49,7 +49,7 @@ public class TablesController : ControllerBase
         return Ok(table);
     }
     
-    [Authorize (Roles = "Admin")]
+    //[Authorize (Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<TableDTO>> AddTable(TableDTO tableDTO)
     {
@@ -58,7 +58,7 @@ public class TablesController : ControllerBase
         return CreatedAtAction(nameof(GetAllTables), new { Id = tableId });
     }
 
-    [Authorize (Roles = "Admin")]
+    //[Authorize (Roles = "Admin")]
     [HttpPut]
     public async Task<ActionResult<TableDTO>> UpdateTable(TableDTO tableDTO)
     {
@@ -72,7 +72,7 @@ public class TablesController : ControllerBase
         return Ok(tableDTO.Id);
     }
 
-    [Authorize (Roles = "Admin")]
+    //[Authorize (Roles = "Admin")]
     [HttpPatch]
     public async Task<ActionResult<TableDTO>> UpdateTableField(TableDTO tableDTO)
     {
@@ -88,7 +88,7 @@ public class TablesController : ControllerBase
     }
 
 
-    [Authorize (Roles = "Admin")]
+    //[Authorize (Roles = "Admin")]
     [HttpDelete]
 
     public async Task<ActionResult<TableDTO>> DeleteTable(int id)

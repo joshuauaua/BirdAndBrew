@@ -57,6 +57,7 @@ public class MenuItemsController : ControllerBase
     [HttpPut]
     public async Task<ActionResult<MenuItemDTO>> UpdateMenuItem(MenuItemDTO menuItemDTO)
     {
+
         var updated = _context.UpdateMenuItemAsync(menuItemDTO);
 
         if (updated == null)
@@ -65,9 +66,9 @@ public class MenuItemsController : ControllerBase
         }
         
         return Ok(menuItemDTO.Id);
+        
     }
-    
-    
+
     //[Authorize (Roles = "Admin")]
     [HttpDelete]
     public async Task<ActionResult<MenuItemDTO>> DeleteMenuItem(int id)
@@ -78,10 +79,9 @@ public class MenuItemsController : ControllerBase
             return NotFound();
         
         return NoContent();
+
     }
     
-    
-    
-    
-    
+
+
 }
