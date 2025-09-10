@@ -52,9 +52,9 @@ public class CustomersController : ControllerBase
 
     [HttpDelete]
 
-    public async Task<ActionResult<CustomerDTO>> DeleteCustomer(int customerId)
+    public async Task<ActionResult<CustomerDTO>> DeleteCustomer(int id)
     {
-        var deleted= await _customerService.DeleteCustomerAsync(customerId);
+        var deleted= await _customerService.DeleteCustomerAsync(id);
         
         if (!deleted)
             return NotFound();  

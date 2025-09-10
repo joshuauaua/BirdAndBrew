@@ -18,7 +18,7 @@ public class MenuItemsController : ControllerBase
         _context = context;
     }
     
-    [Authorize (Roles = "Admin")]
+    //[Authorize (Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<int>> CreateNewMenuItem(MenuItemDTO menuItemDTO)
     {
@@ -53,11 +53,10 @@ public class MenuItemsController : ControllerBase
         return Ok(menuItemDTO);
     }
 
-    [Authorize (Roles = "Admin")]
+    //[Authorize (Roles = "Admin")]
     [HttpPut]
     public async Task<ActionResult<MenuItemDTO>> UpdateMenuItem(MenuItemDTO menuItemDTO)
     {
-
         var updated = _context.UpdateMenuItemAsync(menuItemDTO);
 
         if (updated == null)
@@ -66,25 +65,23 @@ public class MenuItemsController : ControllerBase
         }
         
         return Ok(menuItemDTO.Id);
-        
     }
-
-    [Authorize (Roles = "Admin")]
+    
+    
+    //[Authorize (Roles = "Admin")]
     [HttpDelete]
-    public async Task<ActionResult<MenuItemDTO>> DeleteMenuItem(MenuItemDTO menuItemDTO)
+    public async Task<ActionResult<MenuItemDTO>> DeleteMenuItem(int id)
     {
+        var deleted = await _context.DeleteMenuItemAsync(id);
 
-        var deleted = _context.DeleteMenuItemAsync(menuItemDTO.Id);
-
-        if (deleted == null)
-        {
+        if (!deleted)
             return NotFound();
-        }
-
-        return Ok(menuItemDTO.Id);
-
-
+        
+        return NoContent();
     }
-
-
+    
+    
+    
+    
+    
 }

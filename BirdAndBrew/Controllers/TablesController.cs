@@ -91,10 +91,10 @@ public class TablesController : ControllerBase
     [Authorize (Roles = "Admin")]
     [HttpDelete]
 
-    public async Task<ActionResult<TableDTO>> DeleteTable(TableDTO tableDTO)
+    public async Task<ActionResult<TableDTO>> DeleteTable(int id)
     {
 
-        var deleted = await _tableService.DeleteTableAsync(tableDTO.Id);
+        var deleted = await _tableService.DeleteTableAsync(id);
 
         if (!deleted)
             return NotFound();
@@ -102,6 +102,9 @@ public class TablesController : ControllerBase
         return NoContent();
         
     }
+    
+    
+    
 
 }
 

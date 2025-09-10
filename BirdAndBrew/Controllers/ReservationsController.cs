@@ -36,6 +36,8 @@ public class ReservationsController : ControllerBase
     }
     
     [Authorize (Roles = "Admin")]
+    
+    
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ReservationDTO>> GetReservationById(int id)
     {
@@ -106,9 +108,9 @@ public class ReservationsController : ControllerBase
     [Authorize (Roles = "Admin")]
     [HttpDelete]
 
-    public async Task<ActionResult<ReservationDTO>> DeleteReservation(ReservationDTO reservationDTO)
+    public async Task<ActionResult<ReservationDTO>> DeleteReservation(int id)
     {
-        var deleted = await _context.DeleteReservationAsync(reservationDTO.Id);
+        var deleted = await _context.DeleteReservationAsync(id);
 
         if (!deleted)
         {
@@ -118,5 +120,8 @@ public class ReservationsController : ControllerBase
         return NoContent();
     } 
     
+    
+    
+
     
 }
