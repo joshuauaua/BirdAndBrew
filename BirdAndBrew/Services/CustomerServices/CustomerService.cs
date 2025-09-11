@@ -23,8 +23,10 @@ public class CustomerService : ICustomerService
         var customersDTO = customers.Select(c => new CustomerDTO
             {
                 Id =c.Id,
-                Name = c.Name,
-                PhoneNumber = c.PhoneNumber
+                FirstName = c.FirstName,
+                LastName = c.LastName,
+                PhoneNumber = c.PhoneNumber,
+                EmailAddress = c.EmailAddress
             }
         ).ToList();
 
@@ -43,9 +45,10 @@ public class CustomerService : ICustomerService
         
         var customerDTO = new CustomerDTO
         {
-            Id = customer.Id,
-            Name = customer.Name,
-            PhoneNumber = customer.PhoneNumber
+            FirstName = customer.FirstName,
+            LastName = customer.LastName,
+            PhoneNumber = customer.PhoneNumber,
+            EmailAddress = customer.EmailAddress
         };
 
         return customerDTO;
@@ -56,8 +59,10 @@ public class CustomerService : ICustomerService
     {
         var customer = new Customer
         {
-            Name = customerDTO.Name,
-            PhoneNumber = customerDTO.PhoneNumber
+            FirstName = customerDTO.FirstName,
+            LastName = customerDTO.LastName,
+            PhoneNumber = customerDTO.PhoneNumber,
+            EmailAddress = customerDTO.EmailAddress
         };
 
         var newCustomerId = await _customerRepository.AddCustomerAsync(customer);
@@ -74,8 +79,10 @@ public class CustomerService : ICustomerService
         if (existing == null)
             return false;
 
-        existing.Name = customerDTO.Name;
+        existing.FirstName = customerDTO.FirstName;
+        existing.LastName = customerDTO.LastName;
         existing.PhoneNumber = customerDTO.PhoneNumber;
+        existing.EmailAddress = customerDTO.EmailAddress;
 
         await _customerRepository.UpdateCustomerAsync(existing);
 
@@ -91,8 +98,14 @@ public class CustomerService : ICustomerService
         if (existing == null)
             return false;
 
-        if (customerDTO.Name != null)
-            existing.Name = customerDTO.Name;
+        if (customerDTO.FirstName != null)
+            existing.FirstName = customerDTO.FirstName;
+        
+        if (customerDTO.LastName != null)
+            existing.LastName = customerDTO.LastName;
+        
+        if (customerDTO.EmailAddress != null)
+            existing.EmailAddress = customerDTO.EmailAddress;
         
         if (customerDTO.PhoneNumber != null)
             existing.PhoneNumber = customerDTO.PhoneNumber;

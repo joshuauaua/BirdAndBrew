@@ -10,10 +10,21 @@ public class Customer
     
     [Required]
     [MaxLength(50)]
-    public string Name { get; set; }
+    public string FirstName { get; set; }
+    
+     
+    [Required]
+    [MaxLength(50)]
+    public string LastName { get; set; }
+
     
     [Required]
+    [Phone]
     public string PhoneNumber { get; set; }
+    
+    [Required]
+    [EmailAddress]
+    public string EmailAddress { get; set; }
     
     //List of Reservations to connect 
     public List<Reservation> Reservations { get; set; }
