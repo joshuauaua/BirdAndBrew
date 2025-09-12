@@ -54,7 +54,7 @@ public class ReservationsController : ControllerBase
     //[Authorize (Roles = "Admin")]
     //Available Tables
     [HttpGet("available-tables")]
-    public async Task<IActionResult> GetAvailableTables(DateTime startTime, int partySize)
+    public async Task<IActionResult> GetAvailableTables(TimeOnly startTime, int partySize)
     {
         var tables = await _bookingAvailability.GetAvailableTablesAsync(startTime, partySize);
 

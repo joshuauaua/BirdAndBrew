@@ -53,19 +53,20 @@ public class MenuItemService : IMenuItemService
         return menuItemDTO;
     }
 
-    public async Task<MenuItemDTO> GetMenuItemByIdAsync(int menuItemDTOId)
+    
+    //Get menu Item by ID
+    public async Task<MenuItemDTO> GetMenuItemByIdAsync(int id)
     {
 
-        var menuItem = await _context.GetMenuItemByIdAsync(menuItemDTOId);
+        var menuItem = await _context.GetMenuItemByIdAsync(id);
 
         if (menuItem == null)
         {
             return null;
         }
 
-        var menuItemDTO = new MenuItemDTO()
+        var menuItemDTO = new MenuItemDTO
         {
-            Id = menuItem.Id,
             Name = menuItem.Name,
             Description = menuItem.Description,
             Price = menuItem.Price,
@@ -75,7 +76,10 @@ public class MenuItemService : IMenuItemService
 
         return menuItemDTO;
     }
-
+    
+    
+    
+    
     public async Task<bool> UpdateMenuItemAsync(MenuItemDTO menuItemDTO)
     {
         var existing = await _context.GetMenuItemByIdAsync(menuItemDTO.Id);

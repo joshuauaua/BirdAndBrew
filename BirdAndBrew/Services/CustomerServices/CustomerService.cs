@@ -33,10 +33,10 @@ public class CustomerService : ICustomerService
         return customersDTO;
     }
 
-    //Get All Customers by ID
-    public async Task<CustomerDTO> GetCustomerByIdAsync(int customerId)
+    //Get  Customers by ID
+    public async Task<CustomerDTO> GetCustomerByIdAsync(int id)
     {
-        var customer = await _customerRepository.GetCustomerByIdAsync(customerId);
+        var customer = await _customerRepository.GetCustomerByIdAsync(id);
 
         if (customer == null)
         {

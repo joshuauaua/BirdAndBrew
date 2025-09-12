@@ -13,7 +13,7 @@ public class BookingAvailabilityService : IBookingAvailabilityService
         _context = context;
     }
 
-    public async Task<List<Table>> GetAvailableTablesAsync(DateTime startTime, int partySize)
+    public async Task<List<Table>> GetAvailableTablesAsync(TimeOnly startTime, int partySize)
     {
         var endTime = startTime.AddHours(2);
 

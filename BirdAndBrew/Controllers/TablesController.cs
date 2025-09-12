@@ -24,7 +24,7 @@ public class TablesController : ControllerBase
     //[Authorize (Roles = "Admin")]
     //Get All
     [HttpGet]
-    public async Task<ActionResult<List<TableDTO>>> GetAllTables()
+    public async Task<ActionResult<List<ReadTableDTO>>> GetAllTables()
     {
         
         var tables = await _tableService.GetAllTablesAsync();
@@ -36,7 +36,7 @@ public class TablesController : ControllerBase
     //[Authorize (Roles = "Admin")]
     [HttpGet("{id:int}")]
     
-    public async Task<ActionResult<TableDTO>> GetTableById(int id)
+    public async Task<ActionResult<ReadTableDTO>> GetTableById(int id)
     {
         var table = await _tableService.GetTableByIdAsync(id);
 
@@ -51,39 +51,39 @@ public class TablesController : ControllerBase
     
     //[Authorize (Roles = "Admin")]
     [HttpPost]
-    public async Task<ActionResult<TableDTO>> AddTable(TableDTO tableDTO)
+    public async Task<ActionResult<ReadTableDTO>> AddTable(CreateTableDTO createTableDTO)
     {
-        var tableId = _tableService.AddTableAsync(tableDTO);
+        var tableId = _tableService.AddTableAsync(createTableDTO);
 
         return CreatedAtAction(nameof(GetAllTables), new { Id = tableId });
     }
 
     //[Authorize (Roles = "Admin")]
     [HttpPut]
-    public async Task<ActionResult<TableDTO>> UpdateTable(TableDTO tableDTO)
+    public async Task<ActionResult<ReadTableDTO>> UpdateTable(ReadTableDTO readTableDTO)
     {
-        var updated = await _tableService.UpdateTableAsync(tableDTO);
+        var updated = await _tableService.UpdateTableAsync(readTableDTO);
 
         if (!updated)
         {
             return NotFound();
         }
 
-        return Ok(tableDTO.Id);
+        return Ok(readTableDTO.Id);
     }
 
     //[Authorize (Roles = "Admin")]
     [HttpPatch]
-    public async Task<ActionResult<TableDTO>> UpdateTableField(TableDTO tableDTO)
+    public async Task<ActionResult<ReadTableDTO>> UpdateTableField(ReadTableDTO readTableDTO)
     {
-        var updated = await _tableService.UpdateTableFieldAsync(tableDTO);
+        var updated = await _tableService.UpdateTableFieldAsync(readTableDTO);
 
         if (!updated)
         {
             return NotFound();
         }
 
-        return Ok(tableDTO.Id);
+        return Ok(readTableDTO.Id);
         
     }
 
@@ -91,7 +91,7 @@ public class TablesController : ControllerBase
     //[Authorize (Roles = "Admin")]
     [HttpDelete]
 
-    public async Task<ActionResult<TableDTO>> DeleteTable(int id)
+    public async Task<ActionResult<ReadTableDTO>> DeleteTable(int id)
     {
 
         var deleted = await _tableService.DeleteTableAsync(id);

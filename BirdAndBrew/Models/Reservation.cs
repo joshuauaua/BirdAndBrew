@@ -12,11 +12,18 @@ public class Reservation
     [Range(1,100)]
     public int NumberOfGuests { get; set; }
     
-    [Required]
-    public DateTime ReservationStartTime { get; set; }
     
     [Required]
-    public DateTime ReservationEndTime { get; set; }
+    public DateOnly ReservationDate { get; set; }
+
+    
+    [Required]
+    public TimeOnly ReservationStartTime { get; set; }
+    
+    [Required]
+    public TimeOnly ReservationEndTime { get; set; }
+    
+    
 
     //FK Customer
     [ForeignKey("Customer")]

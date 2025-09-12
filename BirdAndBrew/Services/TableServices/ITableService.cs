@@ -7,21 +7,21 @@ namespace BirdAndBrew.Services.TableServices;
 public interface ITableService
 {
     //Get All Tables
-    Task<List<TableDTO>> GetAllTablesAsync();
+    Task<List<ReadTableDTO>> GetAllTablesAsync();
 
     //Get Table By Id
-    Task<TableDTO> GetTableByIdAsync(int tableDTOId);
+    Task<ReadTableDTO> GetTableByIdAsync(int tableDTOId);
     
     
     //Add Table
-    Task<int> AddTableAsync(TableDTO tableDTO);
+    Task<int> AddTableAsync(CreateTableDTO createTableDTO);
 
     //Update Table
-    Task<bool> UpdateTableAsync(TableDTO tableDTO);
+    Task<bool> UpdateTableAsync(ReadTableDTO readTableDTO);
     
     //Update Table Field
 
-    Task<bool> UpdateTableFieldAsync(TableDTO tableDTO);
+    Task<bool> UpdateTableFieldAsync(ReadTableDTO readTableDTO);
 
     //Delete Table
     Task<bool> DeleteTableAsync(int tableId);

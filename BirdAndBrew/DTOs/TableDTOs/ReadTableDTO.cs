@@ -3,7 +3,7 @@ using BirdAndBrew.Models;
 
 namespace BirdAndBrew.DTOs.TableDTOs;
 
-public class TableDTO
+public class ReadTableDTO
 {
     public int Id { get; set; }
     

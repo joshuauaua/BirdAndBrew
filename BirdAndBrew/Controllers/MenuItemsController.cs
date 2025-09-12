@@ -11,18 +11,18 @@ namespace BirdAndBrew.Controllers;
 public class MenuItemsController : ControllerBase
 {
 
-    private readonly IMenuItemService _context;
+    private readonly IMenuItemService _menuItemService;
 
-    public MenuItemsController(IMenuItemService context)
+    public MenuItemsController(IMenuItemService menuItemService)
     {
-        _context = context;
+        _menuItemService =  menuItemService;
     }
     
     //[Authorize (Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<int>> CreateNewMenuItem(MenuItemDTO menuItemDTO)
     {
-        await _context.CreateMenuItemAsync(menuItemDTO);
+        await _menuItemService.CreateMenuItemAsync(menuItemDTO);
 
         if (menuItemDTO == null)
         {
@@ -34,16 +34,16 @@ public class MenuItemsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<MenuItemDTO>>> GetMenuItems()
     {
-        var menuItems = await _context.GetMenuItemsAsync();
+        var menuItems = await _menuItemService.GetMenuItemsAsync();
 
         return Ok(menuItems);
     }
 
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<MenuItemDTO>> GetMenuItemsById(int menuItemId)
+    public async Task<ActionResult<MenuItemDTO>> GetMenuItemsById(int id)
     {
-        var menuItemDTO = await _context.GetMenuItemByIdAsync(menuItemId);
+        var menuItemDTO = await _menuItemService.GetMenuItemByIdAsync(id);
 
         if (menuItemDTO == null)
         {
@@ -52,13 +52,16 @@ public class MenuItemsController : ControllerBase
 
         return Ok(menuItemDTO);
     }
+    
+    
+    
 
     //[Authorize (Roles = "Admin")]
     [HttpPut]
     public async Task<ActionResult<MenuItemDTO>> UpdateMenuItem(MenuItemDTO menuItemDTO)
     {
 
-        var updated = _context.UpdateMenuItemAsync(menuItemDTO);
+        var updated = _menuItemService.UpdateMenuItemAsync(menuItemDTO);
 
         if (updated == null)
         {
@@ -73,7 +76,7 @@ public class MenuItemsController : ControllerBase
     [HttpDelete]
     public async Task<ActionResult<MenuItemDTO>> DeleteMenuItem(int id)
     {
-        var deleted = await _context.DeleteMenuItemAsync(id);
+        var deleted = await _menuItemService.DeleteMenuItemAsync(id);
 
         if (!deleted)
             return NotFound();

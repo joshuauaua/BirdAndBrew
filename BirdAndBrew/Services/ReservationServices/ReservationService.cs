@@ -30,15 +30,13 @@ public class ReservationService : IReservationService
             NumberOfGuests = r.NumberOfGuests,
             ReservationStartTime = r.ReservationStartTime,
             ReservationEndTime = r.ReservationStartTime.AddHours(2),
+            ReservationDate = r.ReservationDate,
             FK_CustomerId = r.FK_CustomerId,
             Fk_TableId = r.Fk_TableId
         }).ToList();
 
         return reservationsDTO;
     }
-
-    
-    
     
     
     
@@ -57,6 +55,7 @@ public class ReservationService : IReservationService
             NumberOfGuests = reservation.NumberOfGuests,
             ReservationStartTime = reservation.ReservationStartTime,
             ReservationEndTime = reservation.ReservationStartTime.AddHours(2),
+            ReservationDate = reservation.ReservationDate,
             FK_CustomerId = reservation.FK_CustomerId,
             Fk_TableId = reservation.Fk_TableId
         };
@@ -78,6 +77,7 @@ public class ReservationService : IReservationService
             NumberOfGuests = reservationDTO.NumberOfGuests,
             ReservationStartTime = reservationDTO.ReservationStartTime,
             ReservationEndTime = reservationDTO.ReservationStartTime.AddHours(2),
+            ReservationDate = reservationDTO.ReservationDate,
             FK_CustomerId = reservationDTO.FK_CustomerId,
             Fk_TableId = reservationDTO.Fk_TableId
         };
@@ -108,6 +108,7 @@ public class ReservationService : IReservationService
         existing.NumberOfGuests = reservationDTO.NumberOfGuests;
         existing.ReservationStartTime = reservationDTO.ReservationStartTime;
         existing.ReservationEndTime = reservationDTO.ReservationStartTime.AddHours(2);
+        existing.ReservationDate = reservationDTO.ReservationDate;
         existing.FK_CustomerId = reservationDTO.FK_CustomerId;
         existing.Fk_TableId = reservationDTO.Fk_TableId;
 
@@ -131,6 +132,9 @@ public class ReservationService : IReservationService
         if (existing.ReservationStartTime != null)
             existing.ReservationStartTime = reservationDTO.ReservationStartTime;
         existing.ReservationEndTime = reservationDTO.ReservationStartTime.AddHours(2);
+        
+        if (existing.ReservationDate != null)
+            existing.ReservationDate = reservationDTO.ReservationDate;
         
         if (existing.FK_CustomerId != null)
             existing.FK_CustomerId = reservationDTO.FK_CustomerId;
