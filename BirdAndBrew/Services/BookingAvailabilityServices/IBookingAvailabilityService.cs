@@ -4,5 +4,5 @@ namespace BirdAndBrew.Services.BookingAvailabilityServices;
 
 public interface IBookingAvailabilityService
 {
-           Task<List<Table>> GetAvailableTablesAsync(TimeOnly startTime, int partySize);
+           Task<List<Table>> GetAvailableTablesAsync(DateTime startTime, int partySize);
 }

@@ -16,5 +16,5 @@ public class Table
     public int Capacity { get; set; }
     
     //List of reservations 
-    public List<Reservation> Reservations { get; set; }
+    public List<Reservation>? Reservations { get; set; }
 }

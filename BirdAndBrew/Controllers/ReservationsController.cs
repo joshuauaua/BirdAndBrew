@@ -13,8 +13,7 @@ public class ReservationsController : ControllerBase
 {
     private readonly IReservationService _context;
     private readonly IBookingAvailabilityService _bookingAvailability;
-
-
+    
     public ReservationsController(IReservationService context, IBookingAvailabilityService bookingAvailability)
     {
         _context = context;
@@ -22,13 +21,10 @@ public class ReservationsController : ControllerBase
 
     }
     
-    
-
-    
 
     //[Authorize (Roles = "Admin")]
     [HttpGet]
-    public async Task<ActionResult<List<ReservationDTO>>> GetAllReservations()
+    public async Task<ActionResult<List<ReadReservationDTO>>> GetAllReservations()
     {
         var reservations = await _context.GetAllReservationsAsync();
         
@@ -39,7 +35,7 @@ public class ReservationsController : ControllerBase
     
     
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<ReservationDTO>> GetReservationById(int id)
+    public async Task<ActionResult<CreateReservationDTO>> GetReservationById(int id)
     {
         var reservation = await _context.GetReservationByIdAsync(id);
 
@@ -54,7 +50,7 @@ public class ReservationsController : ControllerBase
     //[Authorize (Roles = "Admin")]
     //Available Tables
     [HttpGet("available-tables")]
-    public async Task<IActionResult> GetAvailableTables(TimeOnly startTime, int partySize)
+    public async Task<IActionResult> GetAvailableTables(DateTime startTime, int partySize)
     {
         var tables = await _bookingAvailability.GetAvailableTablesAsync(startTime, partySize);
 
@@ -67,40 +63,40 @@ public class ReservationsController : ControllerBase
     
    //[Authorize (Roles = "Admin")]
     [HttpPost]
-    public async Task<ActionResult<ReservationDTO>> CreateReservation(ReservationDTO reservationDTO)
+    public async Task<ActionResult<CreateReservationDTO>> CreateReservation(CreateReservationDTO createReservationDTO)
     {
 
-        var reservationId = await _context.CreateNewReservationAsync(reservationDTO);
+        var reservationId = await _context.CreateReservationAsync(createReservationDTO);
 
         return CreatedAtAction(nameof(GetAllReservations), new { id = reservationId });
     }
 
     //[Authorize (Roles = "Admin")]
     [HttpPut]
-    public async Task<ActionResult<ReservationDTO>> UpdateReservation(ReservationDTO reservationDTO)
+    public async Task<ActionResult<CreateReservationDTO>> UpdateReservation(ReadReservationDTO readReservationDTO)
     {
 
-        var updated = await _context.UpdateReservationAsync(reservationDTO);
+        var updated = await _context.UpdateReservationAsync(readReservationDTO);
 
         if (!updated)
         {
             return NotFound();
         }
-        return Ok(reservationDTO.Id);
+        return Ok(readReservationDTO.Id);
     }
 
     //[Authorize (Roles = "Admin")]
     [HttpPatch]
-    public async Task<ActionResult<ReservationDTO>> UpdateReservationField(ReservationDTO reservationDTO)
+    public async Task<ActionResult<CreateReservationDTO>> UpdateReservationField(ReadReservationDTO readReservationDTO)
     {
-        var updated = await _context.UpdateReservationFieldAsync(reservationDTO);
+        var updated = await _context.UpdateReservationFieldAsync(readReservationDTO);
 
         if (!updated)
         {
             return NotFound();
         }
 
-        return Ok(reservationDTO.Id);
+        return Ok(readReservationDTO.Id);
 
     }
     
@@ -108,7 +104,7 @@ public class ReservationsController : ControllerBase
     //[Authorize (Roles = "Admin")]
     [HttpDelete]
 
-    public async Task<ActionResult<ReservationDTO>> DeleteReservation(int id)
+    public async Task<ActionResult<CreateReservationDTO>> DeleteReservation(int id)
     {
         var deleted = await _context.DeleteReservationAsync(id);
 

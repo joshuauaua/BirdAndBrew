@@ -86,11 +86,11 @@ public class TablesController : ControllerBase
         return Ok(readTableDTO.Id);
         
     }
-
+    
+    
 
     //[Authorize (Roles = "Admin")]
     [HttpDelete]
-
     public async Task<ActionResult<ReadTableDTO>> DeleteTable(int id)
     {
 
@@ -103,8 +103,5 @@ public class TablesController : ControllerBase
         
     }
     
-    
-    
-
 }
 

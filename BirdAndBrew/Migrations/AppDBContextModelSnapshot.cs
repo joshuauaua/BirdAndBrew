@@ -134,14 +134,14 @@ namespace BirdAndBrew.Migrations
                     b.Property<int>("NumberOfGuests")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("ReservationDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("ReservationDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<TimeOnly>("ReservationEndTime")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("ReservationEndTime")
+                        .HasColumnType("datetime2");
 
-                    b.Property<TimeOnly>("ReservationStartTime")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("ReservationStartTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

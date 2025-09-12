@@ -1,3 +1,4 @@
+using BirdAndBrew.DTOs.ReservationDTOs;
 using BirdAndBrew.Models;
 
 namespace BirdAndBrew.DTOs.CustomerDTOs;
@@ -10,4 +11,8 @@ public class ReadCustomerDTO
     public string EmailAddress { get; set; }
 
     public string PhoneNumber { get; set; }
+    
+    public List<CreateReservationDTO>? Reservations { get; set; } 
+
+    
 }

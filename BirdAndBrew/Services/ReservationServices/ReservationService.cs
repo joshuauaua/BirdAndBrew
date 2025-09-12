@@ -20,11 +20,13 @@ public class ReservationService : IReservationService
     }
 
     
-    public async Task<List<ReservationDTO>> GetAllReservationsAsync()
+    
+    //GET ALL RESERVATIONS
+    public async Task<List<ReadReservationDTO>> GetAllReservationsAsync()
     {
         var reservations = await _context.GetAllReservationsAsync();
 
-        var reservationsDTO = reservations.Select(r => new ReservationDTO
+        var reservationsDTO = reservations.Select(r => new ReadReservationDTO
         {
             Id = r.Id,
             NumberOfGuests = r.NumberOfGuests,
@@ -40,7 +42,9 @@ public class ReservationService : IReservationService
     
     
     
-    public async Task<ReservationDTO> GetReservationByIdAsync(int reservationId)
+    
+    //GET BY ID
+    public async Task<ReadReservationDTO> GetReservationByIdAsync(int reservationId)
     {
         var reservation = await _context.GetReservationByIdAsync(reservationId);
 
@@ -49,7 +53,7 @@ public class ReservationService : IReservationService
             return null;
         }
         
-        var reservationDTO = new ReservationDTO
+        var reservationDTO = new ReadReservationDTO
         {
             Id = reservation.Id,
             NumberOfGuests = reservation.NumberOfGuests,
@@ -69,57 +73,54 @@ public class ReservationService : IReservationService
     
     
     
-
-    public async Task<bool> CreateNewReservationAsync(ReservationDTO reservationDTO)
+    //POST
+    public async Task<bool> CreateReservationAsync(CreateReservationDTO createReservationDTO)
     {
         var reservation = new Reservation
         {
-            NumberOfGuests = reservationDTO.NumberOfGuests,
-            ReservationStartTime = reservationDTO.ReservationStartTime,
-            ReservationEndTime = reservationDTO.ReservationStartTime.AddHours(2),
-            ReservationDate = reservationDTO.ReservationDate,
-            FK_CustomerId = reservationDTO.FK_CustomerId,
-            Fk_TableId = reservationDTO.Fk_TableId
+            NumberOfGuests = createReservationDTO.NumberOfGuests,
+            ReservationStartTime = createReservationDTO.ReservationStartTime,
+            ReservationEndTime = createReservationDTO.ReservationStartTime.AddHours(2),
+            ReservationDate = createReservationDTO.ReservationDate,
+            FK_CustomerId = createReservationDTO.FK_CustomerId,
+            Fk_TableId = createReservationDTO.Fk_TableId
         };
-
-        var availableTables = await _booker.GetAvailableTablesAsync(reservation.ReservationStartTime, reservation.NumberOfGuests);
-
-        if (availableTables.Count <= 0)
-        {
-            return false;
-        }
         
-        else
-        {
-            var newReservationId = await _context.CreateNewReservationAsync(reservation);
+            await _context.CreateNewReservationAsync(reservation);
+            
             return true;
-        }
+        
     }
+    
+    
+    
+    
+    
 
-    public async Task<bool> UpdateReservationAsync(ReservationDTO reservationDTO)
+    public async Task<bool> UpdateReservationAsync(ReadReservationDTO readReservationDTO)
     {
-        var existing = await _context.GetReservationByIdAsync(reservationDTO.Id);
+        var existing = await _context.GetReservationByIdAsync(readReservationDTO.Id);
 
         if (existing == null)
         {
             return false;
         }
 
-        existing.NumberOfGuests = reservationDTO.NumberOfGuests;
-        existing.ReservationStartTime = reservationDTO.ReservationStartTime;
-        existing.ReservationEndTime = reservationDTO.ReservationStartTime.AddHours(2);
-        existing.ReservationDate = reservationDTO.ReservationDate;
-        existing.FK_CustomerId = reservationDTO.FK_CustomerId;
-        existing.Fk_TableId = reservationDTO.Fk_TableId;
+        existing.NumberOfGuests = readReservationDTO.NumberOfGuests;
+        existing.ReservationStartTime = readReservationDTO.ReservationStartTime;
+        existing.ReservationEndTime = readReservationDTO.ReservationStartTime.AddHours(2);
+        existing.ReservationDate = readReservationDTO.ReservationDate;
+        existing.FK_CustomerId = readReservationDTO.FK_CustomerId;
+        existing.Fk_TableId = readReservationDTO.Fk_TableId;
 
         await _context.UpdateReservationAsync(existing);
         
         return true;
     }
 
-    public async Task<bool> UpdateReservationFieldAsync(ReservationDTO reservationDTO)
+    public async Task<bool> UpdateReservationFieldAsync(ReadReservationDTO readReservationDTO)
     {
-        var existing = await _context.GetReservationByIdAsync(reservationDTO.Id);
+        var existing = await _context.GetReservationByIdAsync(readReservationDTO.Id);
 
         if (existing == null)
         {
@@ -127,20 +128,20 @@ public class ReservationService : IReservationService
         }
 
         if (existing.NumberOfGuests != null)
-            existing.NumberOfGuests = reservationDTO.NumberOfGuests;
+            existing.NumberOfGuests = readReservationDTO.NumberOfGuests;
         
         if (existing.ReservationStartTime != null)
-            existing.ReservationStartTime = reservationDTO.ReservationStartTime;
-        existing.ReservationEndTime = reservationDTO.ReservationStartTime.AddHours(2);
+            existing.ReservationStartTime = readReservationDTO.ReservationStartTime;
+        existing.ReservationEndTime = readReservationDTO.ReservationStartTime.AddHours(2);
         
         if (existing.ReservationDate != null)
-            existing.ReservationDate = reservationDTO.ReservationDate;
+            existing.ReservationDate = readReservationDTO.ReservationDate;
         
         if (existing.FK_CustomerId != null)
-            existing.FK_CustomerId = reservationDTO.FK_CustomerId;
+            existing.FK_CustomerId = readReservationDTO.FK_CustomerId;
         
         if (existing.Fk_TableId != null)
-            existing.Fk_TableId = reservationDTO.Fk_TableId;
+            existing.Fk_TableId = readReservationDTO.Fk_TableId;
 
         await _context.UpdateReservationAsync(existing);
         

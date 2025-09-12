@@ -6,18 +6,18 @@ namespace BirdAndBrew.Services.ReservationServices;
 public interface IReservationService
 {
     //Get All Reservations
-    Task<List<ReservationDTO>> GetAllReservationsAsync();
+    Task<List<ReadReservationDTO>> GetAllReservationsAsync();
     
     //Get Reservation By ID
-    Task<ReservationDTO> GetReservationByIdAsync(int reservationId);
+    Task<ReadReservationDTO> GetReservationByIdAsync(int reservationId);
     
     //Create New Reservation
-    Task<bool> CreateNewReservationAsync(ReservationDTO reservationDTO);
+    Task<bool> CreateReservationAsync(CreateReservationDTO createReservationDTO);
 
     //Update Reservation
-    Task<bool> UpdateReservationAsync(ReservationDTO reservationDTO);
+    Task<bool> UpdateReservationAsync(ReadReservationDTO readReservationDTO);
 
-    Task<bool> UpdateReservationFieldAsync(ReservationDTO reservationDTO);
+    Task<bool> UpdateReservationFieldAsync(ReadReservationDTO readReservationDTO);
     
     //Delete Reservation
     Task<bool> DeleteReservationAsync(int reservationId);

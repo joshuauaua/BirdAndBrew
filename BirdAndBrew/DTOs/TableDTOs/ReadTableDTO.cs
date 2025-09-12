@@ -11,6 +11,6 @@ public class ReadTableDTO
     
     public int Capacity { get; set; }
 
-    public List<ReservationDTO> Reservations { get; set; } 
+    public List<CreateReservationDTO>? Reservations { get; set; } 
 
 }

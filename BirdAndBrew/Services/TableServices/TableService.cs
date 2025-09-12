@@ -108,12 +108,12 @@ public class TableService : ITableService
     {
         await _tableRepository.GetTableByIdAsync(tableId);
 
-        if (tableId == null)
+        if (tableId == 0)
         {
             return false;
         }
-
-        _tableRepository.DeleteTableAsync(tableId);
+        
+        await _tableRepository.DeleteTableAsync(tableId);
         
         return true;
         
