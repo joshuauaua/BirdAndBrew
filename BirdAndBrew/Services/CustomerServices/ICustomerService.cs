@@ -6,19 +6,19 @@ public interface ICustomerService
 {
     
     //Get All Customers
-    Task<List<CustomerDTO>> GetAllCustomersAsync();
+    Task<List<ReadCustomerDTO>> GetAllCustomersAsync();
 
     //Get Customer By Id
-    Task<CustomerDTO> GetCustomerByIdAsync(int customerId);
+    Task<ReadCustomerDTO> GetCustomerByIdAsync(int customerId);
     
     //Add Customer
-    Task<int> AddCustomerAsync(CustomerDTO customerDTO);
+    Task<int> AddCustomerAsync(CreateCustomerDTO createCustomerDTO);
 
     //Update Customer
-    Task<bool> UpdateCustomerAsync(CustomerDTO customerDTO);
+    Task<bool> UpdateCustomerAsync(ReadCustomerDTO readCustomerDTO);
     
     //Update Customer By Field
-    Task<bool> UpdateCustomerFieldAsync(CustomerDTO customerDTO);
+    Task<bool> UpdateCustomerFieldAsync(ReadCustomerDTO readCustomerDTO);
 
 
     //Delete Customer

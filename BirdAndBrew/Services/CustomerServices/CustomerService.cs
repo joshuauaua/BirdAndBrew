@@ -16,11 +16,11 @@ public class CustomerService : ICustomerService
     
     
     //Get All Customers
-    public async Task<List<CustomerDTO>> GetAllCustomersAsync()
+    public async Task<List<ReadCustomerDTO>> GetAllCustomersAsync()
     {
         var customers = await _customerRepository.GetAllCustomersAsync();
         
-        var customersDTO = customers.Select(c => new CustomerDTO
+        var customersDTO = customers.Select(c => new ReadCustomerDTO
             {
                 Id =c.Id,
                 FirstName = c.FirstName,
@@ -34,7 +34,7 @@ public class CustomerService : ICustomerService
     }
 
     //Get  Customers by ID
-    public async Task<CustomerDTO> GetCustomerByIdAsync(int id)
+    public async Task<ReadCustomerDTO> GetCustomerByIdAsync(int id)
     {
         var customer = await _customerRepository.GetCustomerByIdAsync(id);
 
@@ -43,7 +43,7 @@ public class CustomerService : ICustomerService
             return null;
         }
         
-        var customerDTO = new CustomerDTO
+        var customerDTO = new ReadCustomerDTO
         {
             FirstName = customer.FirstName,
             LastName = customer.LastName,
@@ -55,14 +55,14 @@ public class CustomerService : ICustomerService
     }
 
     //Add Customer Async
-    public async Task<int> AddCustomerAsync(CustomerDTO customerDTO)
+    public async Task<int> AddCustomerAsync(CreateCustomerDTO createCustomerDTO)
     {
         var customer = new Customer
         {
-            FirstName = customerDTO.FirstName,
-            LastName = customerDTO.LastName,
-            PhoneNumber = customerDTO.PhoneNumber,
-            EmailAddress = customerDTO.EmailAddress
+            FirstName = createCustomerDTO.FirstName,
+            LastName = createCustomerDTO.LastName,
+            PhoneNumber = createCustomerDTO.PhoneNumber,
+            EmailAddress = createCustomerDTO.EmailAddress
         };
 
         var newCustomerId = await _customerRepository.AddCustomerAsync(customer);
@@ -72,17 +72,17 @@ public class CustomerService : ICustomerService
     }
 
     //Update Customer Async All Fields
-    public async Task<bool> UpdateCustomerAsync(CustomerDTO customerDTO)
+    public async Task<bool> UpdateCustomerAsync(ReadCustomerDTO readCustomerDTO)
     {
-        var existing = await _customerRepository.GetCustomerByIdAsync(customerDTO.Id);
+        var existing = await _customerRepository.GetCustomerByIdAsync(readCustomerDTO.Id);
         
         if (existing == null)
             return false;
 
-        existing.FirstName = customerDTO.FirstName;
-        existing.LastName = customerDTO.LastName;
-        existing.PhoneNumber = customerDTO.PhoneNumber;
-        existing.EmailAddress = customerDTO.EmailAddress;
+        existing.FirstName = readCustomerDTO.FirstName;
+        existing.LastName = readCustomerDTO.LastName;
+        existing.PhoneNumber = readCustomerDTO.PhoneNumber;
+        existing.EmailAddress = readCustomerDTO.EmailAddress;
 
         await _customerRepository.UpdateCustomerAsync(existing);
 
@@ -91,24 +91,24 @@ public class CustomerService : ICustomerService
     
     
     //Update Customer Field Async 
-    public async Task<bool> UpdateCustomerFieldAsync(CustomerDTO customerDTO)
+    public async Task<bool> UpdateCustomerFieldAsync(ReadCustomerDTO readCustomerDTO)
     {
-        var existing = await _customerRepository.GetCustomerByIdAsync(customerDTO.Id);
+        var existing = await _customerRepository.GetCustomerByIdAsync(readCustomerDTO.Id);
         
         if (existing == null)
             return false;
 
-        if (customerDTO.FirstName != null)
-            existing.FirstName = customerDTO.FirstName;
+        if (readCustomerDTO.FirstName != null)
+            existing.FirstName = readCustomerDTO.FirstName;
         
-        if (customerDTO.LastName != null)
-            existing.LastName = customerDTO.LastName;
+        if (readCustomerDTO.LastName != null)
+            existing.LastName = readCustomerDTO.LastName;
         
-        if (customerDTO.EmailAddress != null)
-            existing.EmailAddress = customerDTO.EmailAddress;
+        if (readCustomerDTO.EmailAddress != null)
+            existing.EmailAddress = readCustomerDTO.EmailAddress;
         
-        if (customerDTO.PhoneNumber != null)
-            existing.PhoneNumber = customerDTO.PhoneNumber;
+        if (readCustomerDTO.PhoneNumber != null)
+            existing.PhoneNumber = readCustomerDTO.PhoneNumber;
 
         _customerRepository.UpdateCustomerAsync(existing);
 

@@ -20,7 +20,7 @@ public class CustomersController : ControllerBase
 
 
     [HttpGet]
-    public async Task<ActionResult<List<CustomerDTO>>> GetAllCustomers()
+    public async Task<ActionResult<List<ReadCustomerDTO>>> GetAllCustomers()
     {
         var customers = await _customerService.GetAllCustomersAsync();
 
@@ -29,7 +29,7 @@ public class CustomersController : ControllerBase
 
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<CustomerDTO>> GetCustomerById(int id)
+    public async Task<ActionResult<ReadCustomerDTO>> GetCustomerById(int id)
     {
         var customer = await _customerService.GetCustomerByIdAsync(id);
 
@@ -42,9 +42,9 @@ public class CustomersController : ControllerBase
 
 
     [HttpPost]
-    public async Task<ActionResult<CustomerDTO>> AddCustomer(CustomerDTO customer)
+    public async Task<ActionResult<ReadCustomerDTO>> AddCustomer(CreateCustomerDTO createCustomerDTO)
     {
-        var customerId = await _customerService.AddCustomerAsync(customer);
+        var customerId = await _customerService.AddCustomerAsync(createCustomerDTO);
 
         return CreatedAtAction(nameof(GetAllCustomers), new { id = customerId });
     }
@@ -52,7 +52,7 @@ public class CustomersController : ControllerBase
 
     [HttpDelete]
 
-    public async Task<ActionResult<CustomerDTO>> DeleteCustomer(int id)
+    public async Task<ActionResult<ReadCustomerDTO>> DeleteCustomer(int id)
     {
         var deleted= await _customerService.DeleteCustomerAsync(id);
         
@@ -66,30 +66,30 @@ public class CustomersController : ControllerBase
 
     [HttpPut]
 
-    public async Task<ActionResult<CustomerDTO>> UpdateCustomer(CustomerDTO customer)
+    public async Task<ActionResult<ReadCustomerDTO>> UpdateCustomer(ReadCustomerDTO readCustomer)
     {
-        var updated = await _customerService.UpdateCustomerAsync(customer);
+        var updated = await _customerService.UpdateCustomerAsync(readCustomer);
 
         if (!updated)
         {
             return NotFound();
         }
         
-        return Ok(customer.Id);
+        return Ok(readCustomer.Id);
     }
 
     [HttpPatch]
 
-    public async Task<ActionResult<CustomerDTO>> UpdateCustomerField(CustomerDTO customer)
+    public async Task<ActionResult<ReadCustomerDTO>> UpdateCustomerField(ReadCustomerDTO readCustomer)
     {
-        var updated = await _customerService.UpdateCustomerFieldAsync(customer);
+        var updated = await _customerService.UpdateCustomerFieldAsync(readCustomer);
         
         if (!updated)
         {
             return NotFound();
         }
         
-        return Ok(customer.Id);
+        return Ok(readCustomer.Id);
 
     }
     

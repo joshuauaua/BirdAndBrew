@@ -2,7 +2,7 @@ using BirdAndBrew.Models;
 
 namespace BirdAndBrew.DTOs.CustomerDTOs;
 
-public class CustomerDTO
+public class ReadCustomerDTO
 {
     public int Id { get; set; } 
     public string FirstName { get; set; }
