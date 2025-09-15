@@ -72,33 +72,19 @@ public class ReservationsController : ControllerBase
     }
 
     //[Authorize (Roles = "Admin")]
-    [HttpPut]
-    public async Task<ActionResult<CreateReservationDTO>> UpdateReservation(ReadReservationDTO readReservationDTO)
+    [HttpPut("{id}")]
+    public async Task<ActionResult<CreateReservationDTO>> UpdateReservation(int id, [FromBody] CreateReservationDTO reservationDTO)
     {
 
-        var updated = await _context.UpdateReservationAsync(readReservationDTO);
+        var updated = await _context.UpdateReservationAsync(id, reservationDTO);
 
         if (!updated)
         {
             return NotFound();
         }
-        return Ok(readReservationDTO.Id);
+        return Ok(reservationDTO);
     }
-
-    //[Authorize (Roles = "Admin")]
-    [HttpPatch]
-    public async Task<ActionResult<CreateReservationDTO>> UpdateReservationField(ReadReservationDTO readReservationDTO)
-    {
-        var updated = await _context.UpdateReservationFieldAsync(readReservationDTO);
-
-        if (!updated)
-        {
-            return NotFound();
-        }
-
-        return Ok(readReservationDTO.Id);
-
-    }
+    
     
     
     //[Authorize (Roles = "Admin")]

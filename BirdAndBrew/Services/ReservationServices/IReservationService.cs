@@ -15,9 +15,8 @@ public interface IReservationService
     Task<bool> CreateReservationAsync(CreateReservationDTO createReservationDTO);
 
     //Update Reservation
-    Task<bool> UpdateReservationAsync(ReadReservationDTO readReservationDTO);
+    Task<bool> UpdateReservationAsync(int id, CreateReservationDTO reservationDTO);
 
-    Task<bool> UpdateReservationFieldAsync(ReadReservationDTO readReservationDTO);
     
     //Delete Reservation
     Task<bool> DeleteReservationAsync(int reservationId);
