@@ -5,16 +5,16 @@ namespace BirdAndBrew.Services.MenuItemServices;
 public interface IMenuItemService
 {
     //Create Menu Item
-    Task<int> CreateMenuItemAsync(MenuItemDTO menuItemDTO);
+    Task<int> CreateMenuItemAsync(CreateMenuItemDTO menuItemDTO);
 
     //Get Menu Items
-    Task<List<MenuItemDTO>> GetMenuItemsAsync();
+    Task<List<ReadMenuItemDTO>> GetMenuItemsAsync();
 
     // Read Menu Item By ID
-    Task<MenuItemDTO> GetMenuItemByIdAsync(int menuItemDTOId);
+    Task<ReadMenuItemDTO> GetMenuItemByIdAsync(int menuItemDTOId);
     
     //Update Menu Item
-    Task<bool> UpdateMenuItemAsync(MenuItemDTO menuItemDTO);
+    Task<bool> UpdateMenuItemAsync(int id, CreateMenuItemDTO menuItemDTO);
 
     //Delete Menu Item
     Task<bool> DeleteMenuItemAsync(int menuItemId);

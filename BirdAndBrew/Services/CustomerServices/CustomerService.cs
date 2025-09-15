@@ -72,50 +72,23 @@ public class CustomerService : ICustomerService
     }
 
     //Update Customer Async All Fields
-    public async Task<bool> UpdateCustomerAsync(ReadCustomerDTO readCustomerDTO)
+    public async Task<bool> UpdateCustomerAsync(int id, CreateCustomerDTO customerDTO)
     {
-        var existing = await _customerRepository.GetCustomerByIdAsync(readCustomerDTO.Id);
+        var existing = await _customerRepository.GetCustomerByIdAsync(id);
         
         if (existing == null)
             return false;
 
-        existing.FirstName = readCustomerDTO.FirstName;
-        existing.LastName = readCustomerDTO.LastName;
-        existing.PhoneNumber = readCustomerDTO.PhoneNumber;
-        existing.EmailAddress = readCustomerDTO.EmailAddress;
+        existing.FirstName = customerDTO.FirstName;
+        existing.LastName = customerDTO.LastName;
+        existing.PhoneNumber = customerDTO.PhoneNumber;
+        existing.EmailAddress = customerDTO.EmailAddress;
 
         await _customerRepository.UpdateCustomerAsync(existing);
 
         return true;
     }
     
-    
-    //Update Customer Field Async 
-    public async Task<bool> UpdateCustomerFieldAsync(ReadCustomerDTO readCustomerDTO)
-    {
-        var existing = await _customerRepository.GetCustomerByIdAsync(readCustomerDTO.Id);
-        
-        if (existing == null)
-            return false;
-
-        if (readCustomerDTO.FirstName != null)
-            existing.FirstName = readCustomerDTO.FirstName;
-        
-        if (readCustomerDTO.LastName != null)
-            existing.LastName = readCustomerDTO.LastName;
-        
-        if (readCustomerDTO.EmailAddress != null)
-            existing.EmailAddress = readCustomerDTO.EmailAddress;
-        
-        if (readCustomerDTO.PhoneNumber != null)
-            existing.PhoneNumber = readCustomerDTO.PhoneNumber;
-
-        _customerRepository.UpdateCustomerAsync(existing);
-
-        return true;
-    }
-    
-
     //Delete Customer
     public async Task<bool> DeleteCustomerAsync(int customerId)
     {

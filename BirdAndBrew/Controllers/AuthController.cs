@@ -24,8 +24,7 @@ public class AuthController(IAuthService authService) : ControllerBase
         
         return Ok(admin);
     }
-
-
+    
     [HttpPost("login")]
     public async Task <ActionResult<TokenResponseDTO>> Login(AdminDTO request)
     {

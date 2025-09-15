@@ -24,10 +24,12 @@ public class AuthService : IAuthService
     }
 
 
+    
+    //REGISTER 
     public async Task<Admin> RegisterAsync(AdminDTO request)
     {
 
-        if (await _context.Admins.AnyAsync(a => a.UserName == request.UserName))
+        if (await _context.Admins.AnyAsync(a => a.Username == request.Username))
         {
             return null;
         }
@@ -37,7 +39,7 @@ public class AuthService : IAuthService
         var hashedPassword = new PasswordHasher<Admin>()
             .HashPassword(admin, request.Password);
 
-        admin.UserName = request.UserName;
+        admin.Username = request.Username;
         admin.Password = hashedPassword;
         admin.Role = "Admin";
 
@@ -75,7 +77,7 @@ public class AuthService : IAuthService
     public async Task<TokenResponseDTO> LoginAsync(AdminDTO request)
     {
 
-        var admin = await _context.Admins.FirstOrDefaultAsync(a => a.UserName == request.UserName);
+        var admin = await _context.Admins.FirstOrDefaultAsync(a => a.Username == request.Username);
 
         if (admin == null)
         {
@@ -102,7 +104,7 @@ public class AuthService : IAuthService
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, admin.UserName),
+            new Claim(ClaimTypes.Name, admin.Username),
             new Claim(ClaimTypes.NameIdentifier, admin.Id.ToString()),
             new Claim(ClaimTypes.Role, admin.Role)
         };

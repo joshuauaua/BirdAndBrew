@@ -14,11 +14,10 @@ public class MenuItemService : IMenuItemService
     }
     
     
-    public async Task<int> CreateMenuItemAsync(MenuItemDTO menuItemDTO)
+    public async Task<int> CreateMenuItemAsync(CreateMenuItemDTO menuItemDTO)
     {
         var menuItem = new MenuItem
         {
-            Id = menuItemDTO.Id,
             Name = menuItemDTO.Name,
             Description = menuItemDTO.Description,
             Price = menuItemDTO.Price,
@@ -31,11 +30,11 @@ public class MenuItemService : IMenuItemService
         return menuItem.Id;
     }
 
-    public async Task<List<MenuItemDTO>> GetMenuItemsAsync()
+    public async Task<List<ReadMenuItemDTO>> GetMenuItemsAsync()
     {
         var menuItems = await _context.GetMenuItemsAsync();
 
-        var menuItemDTO = menuItems.Select(m => new MenuItemDTO
+        var menuItemDTO = menuItems.Select(m => new ReadMenuItemDTO
         {
             Id = m.Id,
             Name = m.Name,
@@ -55,7 +54,7 @@ public class MenuItemService : IMenuItemService
 
     
     //Get menu Item by ID
-    public async Task<MenuItemDTO> GetMenuItemByIdAsync(int id)
+    public async Task<ReadMenuItemDTO> GetMenuItemByIdAsync(int id)
     {
 
         var menuItem = await _context.GetMenuItemByIdAsync(id);
@@ -65,7 +64,7 @@ public class MenuItemService : IMenuItemService
             return null;
         }
 
-        var menuItemDTO = new MenuItemDTO
+        var menuItemDTO = new ReadMenuItemDTO
         {
             Name = menuItem.Name,
             Description = menuItem.Description,
@@ -79,10 +78,10 @@ public class MenuItemService : IMenuItemService
     
     
     
-    
-    public async Task<bool> UpdateMenuItemAsync(MenuItemDTO menuItemDTO)
+    //UPDATE
+    public async Task<bool> UpdateMenuItemAsync(int id, CreateMenuItemDTO menuItemDTO)
     {
-        var existing = await _context.GetMenuItemByIdAsync(menuItemDTO.Id);
+        var existing = await _context.GetMenuItemByIdAsync(id);
 
         if (existing == null)
         {

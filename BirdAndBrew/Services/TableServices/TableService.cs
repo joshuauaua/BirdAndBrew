@@ -66,42 +66,22 @@ public class TableService : ITableService
     }
     
     
-    public async Task<bool> UpdateTableAsync(ReadTableDTO readTableDTO)
+    public async Task<bool> UpdateTableAsync(int Id, CreateTableDTO tableDTO)
     {
-        var updatedTable = await _tableRepository.GetTableByIdAsync(readTableDTO.Id);
+        var existing = await _tableRepository.GetTableByIdAsync(Id);
 
-        if (readTableDTO == null)
-        {
-            return false;
-        }
-        updatedTable.TableNumber = readTableDTO.TableNumber;
-        updatedTable.Capacity = readTableDTO.Capacity;
-        
-        await _tableRepository.UpdateTableAsync(updatedTable);
-
-        return true;
-    }
-
-    public async Task<bool> UpdateTableFieldAsync(ReadTableDTO readTableDTO)
-    {
-        var existing = await _tableRepository.GetTableByIdAsync(readTableDTO.Id);
-        
         if (existing == null)
         {
             return false;
         }
-        if (readTableDTO.TableNumber != null)
-            existing.TableNumber = readTableDTO.TableNumber;
         
-        if (readTableDTO.Capacity != null)
-            existing.Capacity = readTableDTO.Capacity;
+        existing.TableNumber = tableDTO.TableNumber;
+        existing.Capacity = tableDTO.Capacity;
         
-        _tableRepository.UpdateTableAsync(existing);
-        
+        await _tableRepository.UpdateTableAsync(existing);
+
         return true;
     }
-    
-
     
     
     public async Task<bool> DeleteTableAsync(int tableId)

@@ -17,12 +17,8 @@ public interface ITableService
     Task<int> AddTableAsync(CreateTableDTO createTableDTO);
 
     //Update Table
-    Task<bool> UpdateTableAsync(ReadTableDTO readTableDTO);
+    Task<bool> UpdateTableAsync(int id, CreateTableDTO tableDTO);
     
-    //Update Table Field
-
-    Task<bool> UpdateTableFieldAsync(ReadTableDTO readTableDTO);
-
     //Delete Table
     Task<bool> DeleteTableAsync(int tableId);
 

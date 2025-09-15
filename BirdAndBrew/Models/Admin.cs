@@ -7,7 +7,9 @@ public class Admin
     [Key]
     public int Id { get; set; }
 
-    [Required] [MaxLength(50)] public string UserName { get; set; } = string.Empty;
+    [Required] 
+    [EmailAddress]
+    [MaxLength(50)] public string Username { get; set; } = string.Empty;
 
     [Required] [MinLength(8)] public string Password { get; set; } = string.Empty;
     

@@ -59,34 +59,18 @@ public class TablesController : ControllerBase
     }
 
     //[Authorize (Roles = "Admin")]
-    [HttpPut]
-    public async Task<ActionResult<ReadTableDTO>> UpdateTable(ReadTableDTO readTableDTO)
+    [HttpPut("{id}")]
+    public async Task<ActionResult<ReadTableDTO>> UpdateTable(int id, [FromBody] CreateTableDTO tableDTO)
     {
-        var updated = await _tableService.UpdateTableAsync(readTableDTO);
+        var updated = await _tableService.UpdateTableAsync(id, tableDTO);
 
         if (!updated)
         {
             return NotFound();
         }
 
-        return Ok(readTableDTO.Id);
+        return Ok(tableDTO);
     }
-
-    //[Authorize (Roles = "Admin")]
-    [HttpPatch]
-    public async Task<ActionResult<ReadTableDTO>> UpdateTableField(ReadTableDTO readTableDTO)
-    {
-        var updated = await _tableService.UpdateTableFieldAsync(readTableDTO);
-
-        if (!updated)
-        {
-            return NotFound();
-        }
-
-        return Ok(readTableDTO.Id);
-        
-    }
-    
     
 
     //[Authorize (Roles = "Admin")]

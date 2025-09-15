@@ -64,34 +64,20 @@ public class CustomersController : ControllerBase
     }
 
 
-    [HttpPut]
+    [HttpPut("{id}")]
 
-    public async Task<ActionResult<ReadCustomerDTO>> UpdateCustomer(ReadCustomerDTO readCustomer)
+    public async Task<ActionResult<ReadCustomerDTO>> UpdateCustomer(int id, CreateCustomerDTO customerDTO)
     {
-        var updated = await _customerService.UpdateCustomerAsync(readCustomer);
+        var updated = await _customerService.UpdateCustomerAsync(id, customerDTO);
 
         if (!updated)
         {
             return NotFound();
         }
         
-        return Ok(readCustomer.Id);
+        return Ok(customerDTO);
     }
 
-    [HttpPatch]
-
-    public async Task<ActionResult<ReadCustomerDTO>> UpdateCustomerField(ReadCustomerDTO readCustomer)
-    {
-        var updated = await _customerService.UpdateCustomerFieldAsync(readCustomer);
-        
-        if (!updated)
-        {
-            return NotFound();
-        }
-        
-        return Ok(readCustomer.Id);
-
-    }
     
 
 }

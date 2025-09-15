@@ -15,12 +15,8 @@ public interface ICustomerService
     Task<int> AddCustomerAsync(CreateCustomerDTO createCustomerDTO);
 
     //Update Customer
-    Task<bool> UpdateCustomerAsync(ReadCustomerDTO readCustomerDTO);
+    Task<bool> UpdateCustomerAsync(int id, CreateCustomerDTO customerDTO);
     
-    //Update Customer By Field
-    Task<bool> UpdateCustomerFieldAsync(ReadCustomerDTO readCustomerDTO);
-
-
     //Delete Customer
     Task<bool> DeleteCustomerAsync(int customerId);
 
