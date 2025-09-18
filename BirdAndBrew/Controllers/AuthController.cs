@@ -1,42 +1,112 @@
-using BirdAndBrew.DTOs.AdminDTOs;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using BirdAndBrew.Data;
+using BirdAndBrew.DTOs.UserDTOs;
 using BirdAndBrew.Models;
-using BirdAndBrew.Services.AdminServices;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BirdAndBrew.Controllers;
 
-[Route("api/[controller]")]
+
+[Route("api/auth")]
 [ApiController]
 
-public class AuthController(IAuthService authService) : ControllerBase
+public class AuthController : ControllerBase
 {
-    
-    [HttpPost("register")]
-    public async Task<ActionResult<Admin>> Register(AdminDTO request)
-    {
-        var admin = await authService.RegisterAsync(request);
 
-        if (admin is null)
+
+    private readonly AppDBContext _context;
+    private readonly IConfiguration _config;
+    public AuthController(AppDBContext context, IConfiguration config)
+    {
+        _context = context;
+        _config = config;
+    }
+
+
+    [HttpPost("Register")]
+    public async Task<IActionResult> Register(UserRegisterDTO newUser)
+    {
+
+        var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == newUser.Email);
+
+        if (existingUser != null)
         {
-            return BadRequest("Username already exists");
+            return BadRequest("Email is already in use");
         }
+
+        string passwordHash = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
+
+        var newAccount = new User
+        {
+            FirstName = newUser.FirstName,
+            LastName = newUser.LastName,
+            Email = newUser.Email,
+            Role = "Admin",
+            PasswordHash = passwordHash
+        };
         
-        return Ok(admin);
+        _context.Users.Add(newAccount);
+        _context.SaveChanges();
+        
+        return Ok();
     }
     
-    [HttpPost("login")]
-    public async Task <ActionResult<TokenResponseDTO>> Login(AdminDTO request)
+    
+    [HttpPost("Login")]
+    public async Task<IActionResult> Login(UserLoginDTO loginUser)
     {
-        var result = await authService.LoginAsync(request);
-
-        if (result is null)
+        
+        //CHECK IF EMAIL MATCHES
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginUser.Email);
+        if (user == null)
         {
-            return BadRequest("Invalid username or password.");
+            return Unauthorized("Invalid email or password");
         }
         
-        return Ok(result);
+        //CHECK IF PASSWORD MATCHES
+        bool passwordMatch = BCrypt.Net.BCrypt.Verify(loginUser.Password, user.PasswordHash);
 
+        if (!passwordMatch)
+        {
+            return Unauthorized("Invalid email or password");
+        }
+
+        var token = GenerateJwtToken(user);
+        
+        
+        return Ok( new { token });
+    }
+
+
+    private string GenerateJwtToken(User user)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]);
+
+        var claims = new ClaimsIdentity(new[]
+        {
+            new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
+            new Claim(ClaimTypes.Role, user.Role),
+            new Claim(ClaimTypes.Email, user.Email)
+        });
+        
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = claims,
+            Expires = DateTime.UtcNow.AddHours(1),
+            Issuer = _config["Jwt:Issuer"],
+            Audience = _config["Jwt:Audience"],
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                SecurityAlgorithms.HmacSha256Signature)
+        };
+
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        return tokenHandler.WriteToken(token);
     }
     
+
 }

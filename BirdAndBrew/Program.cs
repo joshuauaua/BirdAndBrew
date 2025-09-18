@@ -5,7 +5,6 @@ using BirdAndBrew.Repositories.CustomerRepositories;
 using BirdAndBrew.Repositories.MenuItemRepositories;
 using BirdAndBrew.Repositories.ReservationRepositories;
 using BirdAndBrew.Repositories.TableRepositories;
-using BirdAndBrew.Services.AdminServices;
 using BirdAndBrew.Services.BookingAvailabilityServices;
 using BirdAndBrew.Services.CustomerServices;
 using BirdAndBrew.Services.MenuItemServices;
@@ -40,15 +39,15 @@ public class Program
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
-                    ValidIssuer = builder.Configuration["AppSettings:Issuer"],
                     ValidateAudience = true,
-                    ValidAudience = builder.Configuration["AppSettings:Audience"],
                     ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Token"]!))
+                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
                 };
             });
-
         
         builder.Services.AddAuthorization();
         
@@ -69,8 +68,6 @@ public class Program
         
         
         builder.Services.AddScoped<IBookingAvailabilityService, BookingAvailabilityService>();
-
-        builder.Services.AddScoped<IAuthService, AuthService>();
         
 
         

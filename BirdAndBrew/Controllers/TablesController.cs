@@ -21,7 +21,7 @@ public class TablesController : ControllerBase
     }
 
     
-    //[Authorize (Roles = "Admin")]
+    //[Authorize]
     //Get All
     [HttpGet]
     public async Task<ActionResult<List<ReadTableDTO>>> GetAllTables()
