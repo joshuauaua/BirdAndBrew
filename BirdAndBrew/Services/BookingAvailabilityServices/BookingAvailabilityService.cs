@@ -13,10 +13,10 @@ public class BookingAvailabilityService : IBookingAvailabilityService
         _context = context;
     }
 
-    public async Task<List<Table>> GetAvailableTablesAsync(DateTime startTime, int partySize)
+    public async Task<List<Table>> GetAvailableTablesAsync(DateOnly date, TimeOnly startTime, int partySize)
     {
         var endTime = startTime.AddHours(2);
-
+        
         // Get IDs of tables that are already booked in the time range
         var bookedTableIds = await _context.Reservations
             .Where(r => startTime < r.ReservationEndTime && endTime > r.ReservationStartTime)

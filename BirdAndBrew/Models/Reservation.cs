@@ -14,14 +14,14 @@ public class Reservation
     
     
     [Required]
-    public DateTime ReservationDate { get; set; }
+    public DateOnly ReservationDate { get; set; }
 
     
     [Required]
-    public DateTime ReservationStartTime { get; set; }
+    public TimeOnly ReservationStartTime { get; set; }
     
     [Required]
-    public DateTime ReservationEndTime { get; set; }
+    public TimeOnly ReservationEndTime { get; set; }
     
     
 
