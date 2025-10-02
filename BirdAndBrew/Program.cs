@@ -90,6 +90,10 @@ public class Program
 
         var app = builder.Build();
 
+        
+        // Enable CORS before MapControllers
+        app.UseCors("AllowLocalhost");
+
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {

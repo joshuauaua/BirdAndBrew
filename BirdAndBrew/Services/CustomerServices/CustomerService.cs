@@ -103,4 +103,28 @@ public class CustomerService : ICustomerService
         return true;
 
     }
+    
+    //Check if Customer exists, if not add
+
+    public async Task<int> CustomerCheckerAsync(CreateCustomerDTO customerDTO)
+    {
+
+        if (string.IsNullOrWhiteSpace(customerDTO.EmailAddress))
+            throw new ArgumentException("Email Address is required");
+
+        var customer = new Customer
+        {
+            FirstName = customerDTO.FirstName,
+            LastName = customerDTO.LastName,
+            EmailAddress = customerDTO.EmailAddress,
+            PhoneNumber = customerDTO.PhoneNumber
+        };
+
+        var customerId = await _customerRepository.CustomerCheckerAsync(customer);
+
+        return customerId;
+        
+    }
+    
+    
 }

@@ -59,4 +59,20 @@ public class CustomerRepository : ICustomerRepository
         }
         return false;
     }
+
+
+    public async Task<int> CustomerCheckerAsync(Customer customer)
+    {
+        var existingCustomer =
+            await _context.Customers.FirstOrDefaultAsync(c => c.EmailAddress == customer.EmailAddress);
+
+        if (existingCustomer == null)
+        {
+            await _context.Customers.AddAsync(customer);
+            await _context.SaveChangesAsync();
+            return customer.Id;
+        }
+
+        return existingCustomer.Id;
+    }
 }

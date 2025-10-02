@@ -48,8 +48,7 @@ public class CustomersController : ControllerBase
 
         return CreatedAtAction(nameof(GetAllCustomers), new { id = customerId });
     }
-
-
+    
     [HttpDelete]
 
     public async Task<ActionResult<ReadCustomerDTO>> DeleteCustomer(int id)
@@ -76,6 +75,15 @@ public class CustomersController : ControllerBase
         }
         
         return Ok(customerDTO);
+    }
+
+
+    [HttpPost]
+
+    public async Task<ActionResult> CustomerChecker([FromBody] CreateCustomerDTO customerDTO)
+    {
+        var customerId = await _customerService.CustomerCheckerAsync(customerDTO);
+        return Ok(new { CustomerId = customerId });
     }
 
     

@@ -20,4 +20,7 @@ public interface ICustomerService
     //Delete Customer
     Task<bool> DeleteCustomerAsync(int customerId);
 
+    //Customer Checker
+    Task<int> CustomerCheckerAsync(CreateCustomerDTO customer);
+
 }

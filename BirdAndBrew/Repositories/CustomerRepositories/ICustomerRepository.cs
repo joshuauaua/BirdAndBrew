@@ -21,5 +21,8 @@ public interface ICustomerRepository
     //Delete Customer
     Task<bool> DeleteCustomerAsync(int customerId);
     
+    //Check if customer exists, if it doesn't, add new customer
+    Task<int> CustomerCheckerAsync(Customer customer);
+
 
 }
